@@ -1,7 +1,7 @@
 {
-  "name": "@deskpro-apps/my-app",
-  "title": "My App",
-  "description": "My Deskpro app",
+  "name": "@deskpro-apps/productboard",
+  "title": "ProductBoard",
+  "description": "App for ProductBoard",
   "version": "0.0.20",
   "scope": "agent",
   "isSingleInstall": false,
