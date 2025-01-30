@@ -1,6 +1,6 @@
 import { cleanup } from "@testing-library/react";
 import { render } from "@deskpro/app-testing-utils";
-import { App } from "@/App";
+import App from "@/App";
 import { mockPosts } from "@/testing";
 
 jest.mock("./pages/Main/usePosts", () => ({
