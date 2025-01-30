@@ -1,12 +1,12 @@
-import { Routes, Route } from "react-router-dom";
-import { Main } from "@/pages";
+import { Route, Routes } from 'react-router-dom';
+import InitialPage from '@/pages';
 
-const App = () => {
-  return (
-    <Routes>
-      <Route index element={<Main />} />
-    </Routes>
-  );
-}
+function App() {
+    return (
+        <Routes>
+            <Route index element={<InitialPage />} />
+        </Routes>
+    );
+};
 
-export { App };
+export default App;
