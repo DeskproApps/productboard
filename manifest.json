@@ -1,28 +1,67 @@
 {
-  "name": "@deskpro-apps/productboard",
-  "title": "ProductBoard",
-  "description": "App for ProductBoard",
-  "version": "0.0.20",
-  "scope": "agent",
-  "isSingleInstall": false,
-  "hasDevMode": true,
-  "targets": [{ "target": "ticket_sidebar", "entrypoint": "index.html" }],
-  "settings": {
-    "example": {
-      "title": "Example Setting",
-      "description": "Example backend only setting",
-      "type": "string",
-      "isRequired": false,
-      "isBackendOnly": true
+    "name": "@deskpro-apps/productboard",
+    "title": "ProductBoard",
+    "description": "App for ProductBoard",
+    "version": "0.0.20",
+    "scope": "agent",
+    "isSingleInstall": false,
+    "hasDevMode": true,
+    "targets": [
+        {
+            "target": "ticket_sidebar",
+            "entrypoint": "index.html"
+        }
+    ],
+    "settings": {
+        "client_id": {
+            "title": "Client ID",
+            "type": "string",
+            "isRequired": false,
+            "isBackendOnly": false,
+            "order": 10
+        },
+        "client_secret": {
+            "title": "Client Secret",
+            "type": "string",
+            "isRequired": false,
+            "isBackendOnly": false,
+            "order": 20
+        },
+        "callback_url": {
+            "title": "Callback URL",
+            "type": "app_embedded",
+            "options": {
+                "entrypoint": "#/admin/callback"
+            },
+            "isRequired": false,
+            "isBackendOnly": true,
+            "order": 30
+        },
+        "access_token": {
+            "title": "temporary access token",
+            "type": "string",
+            "isRequired": false,
+            "isBackendOnly": false,
+            "order": 40
+        },
+        "refresh_token": {
+            "title": "temporary refresh token",
+            "type": "string",
+            "isRequired": false,
+            "isBackendOnly": false,
+            "order": 50
+        }
+    },
+    "proxy": {
+        "whitelist": [
+            {
+                "url": "https://app.productboard.com/.*",
+                "methods": [
+                    "GET",
+                    "POST"
+                ],
+                "timeout": 20
+            }
+        ]
     }
-  },
-  "proxy": {
-    "whitelist": [
-      {
-        "url": "https://jsonplaceholder.typicode.com/.*",
-        "methods": ["GET"],
-        "timeout": 20
-      }
-    ]
-  }
 }

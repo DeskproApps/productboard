@@ -1,0 +1,1 @@
+export const AUTHENTICATION_USER_STATE_PATH = 'isAuthenticated';

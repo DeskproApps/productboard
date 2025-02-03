@@ -1,12 +1,18 @@
-import { useAuthentication } from '@/hooks';
+import { useState } from 'react';
 import { LogInPage } from '@/pages';
+import { getAuthenticationStatus } from '@/utils';
 
 function InitialPage() {
-    const { isAuthenticated } = useAuthentication();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    getAuthenticationStatus()
+        .then(isAuthenticated => {
+            if (isAuthenticated === true) setIsLoggedIn(true);
+        });
 
     return (
         <>
-            {isAuthenticated ? (
+            {isLoggedIn ? (
                 <>Logged In</>
             ) : (
                 <LogInPage />

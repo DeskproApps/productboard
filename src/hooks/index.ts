@@ -1,1 +1,1 @@
-export { useAuthentication } from './useAuthentication';
+export { default as useAsyncError } from './useAsyncError';
