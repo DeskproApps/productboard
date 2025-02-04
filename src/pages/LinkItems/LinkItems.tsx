@@ -1,6 +1,6 @@
 import { HorizontalDivider, LoadingSpinner, TwoButtonGroup } from '@deskpro/app-sdk';
 import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
-import { Container, InputSearch } from '@/components';
+import { Container, InputSearch, Items } from '@/components';
 import { Item } from '@/types';
 import { Button } from '@deskpro/deskpro-ui';
 
@@ -40,7 +40,10 @@ function LinkItems({
             {isLoading ? (
                 <LoadingSpinner />
             ) : (
-                <></>
+                <Items
+                    items={items}
+                    onChange={() => {}}
+                />
             )}
         </Container>
     );

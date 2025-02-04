@@ -2,3 +2,8 @@ export { default as Container } from './Container/Container';
 export { default as InputSearch } from './InputSearch/InputSearch';
 export { default as SingleSelect } from './SingleSelect/SingleSelect';
 export { default as Label } from './Label/Label';
+export { default as Item } from './Item/Item';
+export { default as Items } from './Item/Items';
+export { default as Link } from './Link/Link';
+export { default as Logo } from './Logo/Logo';
+export { default as NoFound } from './NoFound/NoFound';

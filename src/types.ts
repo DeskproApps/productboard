@@ -27,4 +27,6 @@ export type Option<Value = unknown> = Omit<DropdownValueType<Value>, 'subItems'>
 
 export type Item = {
     id: string;
+    name: string;
+    link: string;
 };

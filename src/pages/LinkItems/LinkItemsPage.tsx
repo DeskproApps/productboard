@@ -3,7 +3,7 @@ import { useDeskproAppClient, useDeskproLatestAppContext } from '@deskpro/app-sd
 import LinkItems from './LinkItems';
 import { useSetTitle } from '@/hooks';
 import { getObjectives } from '@/services';
-import { Objective, Settings } from '@/types';
+import { Item, Objective, Settings } from '@/types';
 
 function LinkItemsPage() {
     const { client } = useDeskproAppClient();
@@ -22,7 +22,7 @@ function LinkItemsPage() {
 
     return (
         <LinkItems
-            items={objectives}
+            items={objectives as unknown as Item[]}
             isLoading={false}
         />
     );
