@@ -1,1 +1,2 @@
-export { default as Container } from './Container/Container';
+export { default as Container } from './Container';
+export { default as InputSearch } from './InputSearch';
