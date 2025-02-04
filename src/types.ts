@@ -1,3 +1,5 @@
+import { DropdownValueType } from '@deskpro/deskpro-ui';
+
 export type TicketData = {
     ticket: {
         id: string;
@@ -20,3 +22,5 @@ export type Objective = {
     description: string;
     level: number | null;  
 };
+
+export type Option<Value = unknown> = Omit<DropdownValueType<Value>, 'subItems'>;
