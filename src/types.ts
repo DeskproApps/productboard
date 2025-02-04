@@ -13,3 +13,10 @@ export type Settings = {
     access_token: string;
     refresh_token: string;
 };
+
+export type Objective = {
+    id: string;
+    name: string;
+    description: string;
+    level: number | null;  
+};
