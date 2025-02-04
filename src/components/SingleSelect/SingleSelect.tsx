@@ -1,8 +1,12 @@
-import { Dropdown, InputProps } from '@deskpro/deskpro-ui';
+import { Dropdown, Input } from '@deskpro/deskpro-ui';
+import styled from 'styled-components';
 import { faCaretDown, faCheck, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { Label } from '@/components';
-import InputStyled from './InputStyled';
 import { Option } from '@/types';
+
+const InputStyled = styled(Input)`
+    width: calc(100% - 22px);
+`;
 
 interface SingleSelect {
     label: string;
