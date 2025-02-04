@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { AdminCallbackPage, HomePage, InitialPage } from '@/pages';
+import { AdminCallbackPage, HomePage, InitialPage, LinkItemsPage,  } from '@/pages';
 
 function App() {
     return (
@@ -7,6 +7,7 @@ function App() {
             <Route index element={<InitialPage />} />
             <Route path='/admin/callback' element={<AdminCallbackPage />} />
             <Route path='/home' element={<HomePage />} />
+            <Route path='/link_cards' element={<LinkItemsPage />} />
         </Routes>
     );
 };
