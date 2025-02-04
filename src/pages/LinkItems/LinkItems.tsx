@@ -1,27 +1,18 @@
-import { useEffect, useState } from 'react';
-import { TwoButtonGroup, useDeskproAppClient, useDeskproLatestAppContext } from '@deskpro/app-sdk';
+import { HorizontalDivider, LoadingSpinner, TwoButtonGroup } from '@deskpro/app-sdk';
 import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Container, InputSearch } from '@/components';
-import { getObjectives } from '@/services';
-import { Objective, Settings } from '@/types';
+import { Item } from '@/types';
+import { Button } from '@deskpro/deskpro-ui';
 
 interface LinkItems {
-
+    items: Item[];
+    isLoading: boolean;
 };
 
-function LinkItems({ }: LinkItems) {
-    const { client } = useDeskproAppClient();
-    const { context } = useDeskproLatestAppContext<unknown, Settings>();
-    const [objectives, setObjectives] = useState<Objective[]>([])
-
-    useEffect(() => {
-        if (client && context) {
-            getObjectives({ client, context })
-                .then(setObjectives);
-        };
-
-    }, [client, context]);
-
+function LinkItems({
+    items,
+    isLoading
+}: LinkItems) {
     return (
         <Container>
             <TwoButtonGroup
@@ -38,9 +29,19 @@ function LinkItems({ }: LinkItems) {
                 onChange={() => {}}
                 onClear={() => {}}
             />
-            {
-                objectives.map(o => <p>o</p>)
-            }
+            <Button
+                text='Link Items'
+                disabled={false}
+                onClick={() => {}}
+            />
+            <HorizontalDivider
+                style={{marginTop: '10px', marginBottom: '10px'}}
+            />
+            {isLoading ? (
+                <LoadingSpinner />
+            ) : (
+                <></>
+            )}
         </Container>
     );
 };
