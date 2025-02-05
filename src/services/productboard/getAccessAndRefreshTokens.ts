@@ -30,7 +30,7 @@ async function getAccessAndRefreshTokens({ token, client, context, redirectURI }
 
         return data;
     } catch (error: any) {
-        console.log('error getting access and refresh tokens', error);
+        console.log('error getting access and refresh tokens:', error);
     };
 };
 

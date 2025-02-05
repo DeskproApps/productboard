@@ -16,14 +16,14 @@
         "client_id": {
             "title": "Client ID",
             "type": "string",
-            "isRequired": false,
+            "isRequired": true,
             "isBackendOnly": false,
             "order": 10
         },
         "client_secret": {
             "title": "Client Secret",
             "type": "string",
-            "isRequired": false,
+            "isRequired": true,
             "isBackendOnly": false,
             "order": 20
         },
@@ -36,20 +36,6 @@
             "isRequired": false,
             "isBackendOnly": true,
             "order": 30
-        },
-        "access_token": {
-            "title": "temporary access token",
-            "type": "string",
-            "isRequired": false,
-            "isBackendOnly": false,
-            "order": 40
-        },
-        "refresh_token": {
-            "title": "temporary refresh token",
-            "type": "string",
-            "isRequired": false,
-            "isBackendOnly": false,
-            "order": 50
         }
     },
     "proxy": {

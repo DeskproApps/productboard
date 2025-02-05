@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { OAuth2StaticCallbackUrl, useDeskproAppClient, useDeskproLatestAppContext, useInitialisedDeskproAppClient } from '@deskpro/app-sdk';
 import { v4 as uuid } from 'uuid';
 import { useAsyncError } from '@/hooks';
@@ -15,13 +14,12 @@ export function useLogIn() {
     const [callback, setCallback] = useState<OAuth2StaticCallbackUrl | null>(null);
     const [authURL, setAuthURL] = useState<string | null>(null);
     const key = useMemo(() => uuid(), []);
-    const navigate = useNavigate();
     const { asyncErrorHandler } = useAsyncError();
 
     useInitialisedDeskproAppClient(client => {
         client
             .oauth2()
-            .getGenericCallbackUrl(key, /code=(?<code>.+?)&/, /state=(?<state>[^&]+)/)
+            .getGenericCallbackUrl(key, /code=(?<token>.+?)&/, /state=(?<key>[^&]+)/)
             .then(setCallback);
     }, [setCallback]);
 
@@ -42,23 +40,6 @@ export function useLogIn() {
     const poll = useCallback(() => {
         if (!callback?.poll || !client || !context) return;
 
-        // temporary override
-        if (context.settings.access_token) {
-            setIsAuthenticating(true);
-            setAccessToken({
-                token: context.settings.access_token,
-                client
-            });
-            setRefreshToken({
-                token: context.settings.refresh_token,
-                client
-            });
-            client.setUserState(AUTHENTICATION_USER_STATE_PATH, 'true');
-            navigate('/');
-
-            return;
-        };
-
         callback.poll()
             .then(({ token }) => getAccessAndRefreshTokens({
                 token,
@@ -71,9 +52,7 @@ export function useLogIn() {
                 setRefreshToken({ token: refresh_token, client });
                 client.setUserState(AUTHENTICATION_USER_STATE_PATH, 'true');
             })
-            .catch(error => {
-                asyncErrorHandler(error);
-            })
+            .catch(asyncErrorHandler)
             .finally(() => {
                 setIsAuthenticating(false);
             });
