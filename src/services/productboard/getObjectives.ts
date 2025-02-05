@@ -2,6 +2,19 @@ import { Context, IDeskproClient } from '@deskpro/app-sdk';
 import baseRequest from './baseRequest';
 import { Objective, Settings } from '@/types';
 
+interface GetObjectivesResponse {
+    data: {
+        id: string;
+        name: string;
+        links: {
+            html: string;
+        };
+    }[];
+    links: {
+        next: string | null;
+    };
+};
+
 interface GetObjectives {
     client: IDeskproClient;
     context: Context<unknown, Settings>;
@@ -9,17 +22,23 @@ interface GetObjectives {
 
 async function getObjectives({ client, context }: GetObjectives): Promise<Objective[]> {
     try {
-        let objectives = [];
+        let objectives: Objective[][] = [];
         let nextPage: string | null = '/objectives';
 
         while (nextPage) {
-            const response = await baseRequest({
+            const response: GetObjectivesResponse = await baseRequest({
                 client,
                 context,
                 endpoint: nextPage
             });
 
-            objectives.push(response.data);
+            const mappedObjectives = response.data.map(objective => ({
+                id: objective.id,
+                name: objective.name,
+                link: objective.links.html,
+            }));
+
+            objectives.push(mappedObjectives);
 
             const nextLink = response.links?.next;
 
@@ -34,7 +53,7 @@ async function getObjectives({ client, context }: GetObjectives): Promise<Object
 
         return objectives.flat();
     } catch (error: any) {
-        console.log('error getting access and refresh tokens', error);
+        console.log('error getting objectives:', error);
 
         return [];
     };

@@ -16,17 +16,13 @@ export type Settings = {
     refresh_token: string;
 };
 
-export type Objective = {
-    id: string;
-    name: string;
-    description: string;
-    level: number | null;  
-};
-
 export type Option<Value = unknown> = Omit<DropdownValueType<Value>, 'subItems'>;
 
-export type Item = {
+export type Objective = {
     id: string;
     name: string;
     link: string;
 };
+
+export type Item =
+    | Objective;

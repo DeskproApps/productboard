@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { HomePage, LogInPage } from '@/pages';
+import { HomePage, LinkItemsPage, LogInPage } from '@/pages';
 import { getAuthenticationStatus } from '@/utils';
 
 function InitialPage() {
@@ -13,7 +13,7 @@ function InitialPage() {
     return (
         <>
             {isLoggedIn ? (
-                <HomePage />
+                <LinkItemsPage />
             ) : (
                 <LogInPage />
             )}

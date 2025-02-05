@@ -22,7 +22,7 @@ function LinkItemsPage() {
 
     return (
         <LinkItems
-            items={objectives as unknown as Item[]}
+            items={objectives}
             isLoading={false}
         />
     );
