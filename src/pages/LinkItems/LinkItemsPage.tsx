@@ -11,6 +11,20 @@ function LinkItemsPage() {
     const [objectives, setObjectives] = useState<Objective[]>([]);
 
     useEffect(() => {
+        if (!client) return;
+
+        client.registerElement('menu', {
+            type: 'menu',
+            items: [{
+                title: 'Log Out',
+                payload: {
+                    type: 'logOut'
+                }
+            }]
+        });
+    }, [client]);
+
+    useEffect(() => {
         if (client && context) {
             getObjectives({ client, context })
                 .then(setObjectives);

@@ -8,11 +8,6 @@ function InitialPage() {
     const [_, dispatch] = useStore();
     const navigate = useNavigate();
 
-    useDeskproElements(({ clearElements, registerElement }) => {
-        clearElements();
-        registerElement('refreshButton', {type: 'refresh_button'});
-    });
-
     useInitialisedDeskproAppClient(client => {
         checkIsAuth(client)
             .then(isAuth => {

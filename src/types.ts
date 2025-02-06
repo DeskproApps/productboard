@@ -25,6 +25,9 @@ export type Objective = {
 export type Item =
     | Objective;
 
+export type Payload = // app events
+    | {type: 'logOut'};
+
 // store context
 
 export type State = {

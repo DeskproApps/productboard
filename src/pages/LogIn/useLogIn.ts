@@ -4,18 +4,18 @@ import { OAuth2StaticCallbackUrl, useDeskproAppClient, useDeskproLatestAppContex
 import { v4 as uuid } from 'uuid';
 import { useStore } from '@/context/Store';
 import { useAsyncError } from '@/hooks';
-import { getAccessAndRefreshTokens, setAccessToken, setRefreshToken } from '@/services';
+import { deleteAccessToken, deleteRefreshToken, getAccessAndRefreshTokens, setAccessToken, setRefreshToken } from '@/services';
 import { Settings } from '@/types';
 
 export function useLogIn() {
     const { client } = useDeskproAppClient();
     const { context } = useDeskproLatestAppContext<unknown, Settings>();
     const clientID = context?.settings.client_id;
-    const [isAuthenticating, setIsAuthenticating] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [callback, setCallback] = useState<OAuth2StaticCallbackUrl | null>(null);
     const [authURL, setAuthURL] = useState<string | null>(null);
     const key = useMemo(() => uuid(), []);
-    const [_, dispatch] = useStore();
+    const [state, dispatch] = useStore();
     const navigate = useNavigate();
     const { asyncErrorHandler } = useAsyncError();
 
@@ -45,7 +45,7 @@ export function useLogIn() {
 
         callback.poll()
             .then(({ token }) => {
-                setIsAuthenticating(true);
+                setIsLoading(true);
 
                 return getAccessAndRefreshTokens({
                     token,
@@ -67,13 +67,37 @@ export function useLogIn() {
             })
             .catch(asyncErrorHandler)
             .finally(() => {
-                setIsAuthenticating(false);
+                setIsLoading(false);
             });
     }, [callback?.poll, client, context, callback?.callbackUrl]);
 
+    const logOut = () => {
+        if (!client) return;
+
+        setIsLoading(true);
+
+        Promise.all([
+            deleteAccessToken({ client }),
+            deleteRefreshToken({ client })
+        ])
+            .then(() => {
+                dispatch({
+                    type: 'setAuth',
+                    payload: false
+                });
+                client.setBadgeCount(0);
+                navigate('/log_in');
+            })
+            .catch(asyncErrorHandler)
+            .finally(() => {
+                setIsLoading(false);
+            });
+    };
+
     return {
         authURL,
-        isLoading: isAuthenticating,
-        poll
+        isLoading,
+        poll,
+        logOut
     };
 };
