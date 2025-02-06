@@ -67,8 +67,6 @@ function HomePage() {
 
     useEffect(() => {
         setLinkedItems(items.filter(item => linkedItemIDs.includes(item.id)));
-
-        console.log('x', ticketID, items, linkedItems, linkedItemIDs)
     }, [items, linkedItemIDs]);
 
     useInitialisedDeskproAppClient(client => {

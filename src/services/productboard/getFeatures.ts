@@ -16,6 +16,7 @@ interface GetFeaturesResponse {
             name: string;
         };
         timeframe: {
+            startDate: string;
             endDate: string;
         };
     }[];
@@ -40,13 +41,22 @@ async function getFeatures({ client }: GetFeatures): Promise<Feature[]> {
             });
 
             const mappedFeatures = response.data.map(feature => {
-                const timeframe = isNaN(Date.parse(feature.timeframe.endDate))
-                    ? '—'
-                    : new Date(feature.timeframe.endDate).toLocaleDateString('en-GB', {
+                let timeframe;
+
+                if (isNaN(Date.parse(feature.timeframe.startDate))) timeframe = '—';
+                else {
+                    const startDate =  new Date(feature.timeframe.startDate).toLocaleDateString('en-GB', {
                         day: '2-digit',
                         month: 'short',
                         year: 'numeric'
                     });
+                    const endDate =  new Date(feature.timeframe.endDate).toLocaleDateString('en-GB', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric'
+                    });
+                    timeframe = `${startDate} — ${endDate}`;
+                };
                 
                 return {
                     id: feature.id,

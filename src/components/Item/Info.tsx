@@ -1,6 +1,8 @@
-import { Title } from '@deskpro/app-sdk';
+import { Title, useDeskproAppClient } from '@deskpro/app-sdk';
 import { Link, Logo, OverflowText, TwoSider } from '@/components';
 import { Item } from '@/types';
+import { useEffect, useState } from 'react';
+import { getLinkedDeskproEntitiesCount } from '@/services';
 
 interface Info {
     item: Item;
@@ -8,12 +10,22 @@ interface Info {
 };
 
 function Info({ item, onTitleClick }: Info) {
+    const { client } = useDeskproAppClient();
+    const [linkedTicketsCount, setLinkedTicketsCount] = useState(0);
+
+    useEffect(() => {
+        if (!client) return;
+
+        getLinkedDeskproEntitiesCount({ client, ID: item.id })
+            .then(setLinkedTicketsCount);
+    }, [client]);
+    
     const ItemTitle = () => (
         <Link
             href='#'
             onClick={event => {
                 event.preventDefault();
-                onTitleClick && onTitleClick();
+                onTitleClick?.();
             }}
         >
             {item.name}
@@ -37,7 +49,7 @@ function Info({ item, onTitleClick }: Info) {
                 leftLabel='Owner'
                 leftText={<OverflowText>{item.owner}</OverflowText>}
                 rightLabel='Deskpro Tickets'
-                rightText={<OverflowText>DeskPro Tickets</OverflowText>}
+                rightText={<OverflowText>{linkedTicketsCount}</OverflowText>}
             />
             <TwoSider
                 leftLabel='Status'
