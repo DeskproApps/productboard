@@ -16,14 +16,14 @@ export type Settings = {
 
 export type Option<Value = unknown> = Omit<DropdownValueType<Value>, 'subItems'>;
 
-export type Objective = {
+export type Product = {
     id: string;
     name: string;
     link: string;
 };
 
 export type Item =
-    | Objective;
+    | Product;
 
 export type Payload = // app events
     | {type: 'logOut'};

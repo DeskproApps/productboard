@@ -1,5 +1,4 @@
-import { Context, IDeskproClient, proxyFetch } from '@deskpro/app-sdk';
-import { Settings } from '@/types';
+import { IDeskproClient, proxyFetch } from '@deskpro/app-sdk';
 
 interface BaseRequest {
     client: IDeskproClient;

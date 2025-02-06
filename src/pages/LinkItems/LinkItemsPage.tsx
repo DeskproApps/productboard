@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useDeskproAppClient, useDeskproLatestAppContext } from '@deskpro/app-sdk';
+import { useDeskproAppClient } from '@deskpro/app-sdk';
 import LinkItems from './LinkItems';
 import { useSetTitle } from '@/hooks';
-import { getObjectives } from '@/services';
-import { Item, Objective, Settings } from '@/types';
+import { getProducts } from '@/services';
+import { Item } from '@/types';
 
 function LinkItemsPage() {
     const { client } = useDeskproAppClient();
-    const { context } = useDeskproLatestAppContext<unknown, Settings>();
-    const [objectives, setObjectives] = useState<Objective[]>([]);
+    const [items, setItems] = useState<Item[]>([]);
 
     useEffect(() => {
         if (!client) return;
@@ -25,18 +24,17 @@ function LinkItemsPage() {
     }, [client]);
 
     useEffect(() => {
-        if (client && context) {
-            getObjectives({ client, context })
-                .then(setObjectives);
-        };
+        if (!client) return;
 
-    }, [client, context]);
+        getProducts({ client })
+            .then(setItems);
+    }, [client]);
 
     useSetTitle('Link Items');
 
     return (
         <LinkItems
-            items={objectives}
+            items={items}
             isLoading={false}
         />
     );
