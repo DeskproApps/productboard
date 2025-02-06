@@ -41,7 +41,8 @@ export type Item =
     | Feature;
 
 export type Payload = // app events
-    | {type: 'logOut'};
+    | {type: 'logOut'}
+    | {type: 'changePage', path: string};
 
 // store context
 

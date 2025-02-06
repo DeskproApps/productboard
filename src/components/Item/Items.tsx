@@ -24,7 +24,7 @@ function Items({
                     key={item.id}
                     item={item}
                     checked={selectedItemIDs.some(ID => item.id === ID)}
-                    onChange={() => onItemSelectionChange(item)}
+                    onCheck={() => onItemSelectionChange(item)}
                 />
             ))}
         </>

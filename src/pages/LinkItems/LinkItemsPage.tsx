@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDeskproAppClient, useDeskproElements, useDeskproLatestAppContext, useInitialisedDeskproAppClient } from '@deskpro/app-sdk';
+import { useDeskproAppClient, useDeskproAppEvents, useDeskproElements, useDeskproLatestAppContext, useInitialisedDeskproAppClient } from '@deskpro/app-sdk';
 import LinkItems from './LinkItems';
 import { useAsyncError, useSetTitle } from '@/hooks';
 import { getFeatures, getRegisteredItemIDs } from '@/services';
@@ -21,6 +21,13 @@ function LinkItemsPage() {
     useDeskproElements(({ clearElements, registerElement }) => {
         clearElements();
         registerElement('refresh', {type: 'refresh_button'});
+        registerElement('home', {
+            type: 'home_button',
+            payload: {
+                type: 'changePage',
+                path: '/home'
+            }
+        });
         registerElement('menu', {
             type: 'menu',
             items: [{
@@ -30,6 +37,18 @@ function LinkItemsPage() {
                 }
             }]
         });
+    });
+
+    useDeskproAppEvents({
+        // @ts-ignore
+        onElementEvent(_: string, __: string, payload: Payload) {
+            switch (payload.type) {
+                case 'changePage':
+                    navigate(payload.path);
+
+                    break;
+            };
+        }
     });
 
     useEffect(() => {
@@ -76,7 +95,7 @@ function LinkItemsPage() {
         Promise.all([
             ...selectedItemIDs.map(ID => client
                 .getEntityAssociation('linkedProductboardItems', ticketID)
-                .set(ID, { itemID: ID})
+                .set(ID)
             )
         ])
             .then(() => {

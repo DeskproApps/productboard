@@ -12,7 +12,7 @@ function InitialPage() {
         checkIsAuth(client)
             .then(isAuth => {
                 dispatch({type: 'setAuth', payload: isAuth});
-                navigate(isAuth ? '/link_items' : '/log_in');
+                navigate(isAuth ? '/home' : '/log_in');
             });
     });
 

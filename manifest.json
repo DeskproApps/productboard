@@ -38,6 +38,13 @@
             "order": 30
         }
     },
+    "entityAssociations": {
+        "linkedProductboardItems": {
+            "entity": "ticket",
+            "type": "external_id",
+            "title": "Linked Productboard Items"
+        }
+    },
     "proxy": {
         "whitelist": [
             {

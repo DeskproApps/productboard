@@ -17,7 +17,7 @@ function App() {
     });
 
     useEffect(() => {
-        if (state.isAuth) navigate('/link_items');
+        if (state.isAuth) navigate('/home');
     }, [state.isAuth]);
 
     const handleElementEvent = (_: string, __: string, payload: Payload) => {

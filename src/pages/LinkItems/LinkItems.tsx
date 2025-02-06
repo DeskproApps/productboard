@@ -47,7 +47,8 @@ function LinkItems({
             />
             <Button
                 text={`Link Item${selectedItemIDs.length !== 1 ? 's' : ''}`}
-                disabled={isSubmitting}
+                loading={isSubmitting}
+                disabled={selectedItemIDs.length < 1}
                 onClick={onLinkTasks}
             />
             <HorizontalDivider

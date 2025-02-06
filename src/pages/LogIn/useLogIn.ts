@@ -63,7 +63,7 @@ export function useLogIn() {
                     type: 'setAuth',
                     payload: true
                 });
-                navigate('/link_items');
+                navigate('/home');
             })
             .catch(asyncErrorHandler)
             .finally(() => {

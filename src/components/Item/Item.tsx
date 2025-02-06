@@ -20,11 +20,12 @@ const Body = styled.div`
 
 interface Item {
     item: ItemType;
-    checked: boolean;
-    onChange: () => void;
+    checked?: boolean;
+    onCheck?: () => void;
+    onTitleClick?: () => void;
 };
 
-function Item({ item, checked, onChange }: Item) {
+function Item({ item, checked = false, onCheck, onTitleClick }: Item) {
     return (
         <>
             <Container>
@@ -33,13 +34,13 @@ function Item({ item, checked, onChange }: Item) {
                         containerStyle={{marginTop: 4}}
                         size={12}
                         checked={checked}
-                        onChange={onChange}
+                        onChange={onCheck}
                     />
                 </Media>
                 <Body>
                     <Info
                         item={item}
-                        onTitleClick={onChange}
+                        onTitleClick={onTitleClick}
                     />
                 </Body>
             </Container>
