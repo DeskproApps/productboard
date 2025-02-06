@@ -1,8 +1,9 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HorizontalDivider, LoadingSpinner, TwoButtonGroup } from '@deskpro/app-sdk';
 import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '@deskpro/deskpro-ui';
-import { Container, InputSearch, Items } from '@/components';
+import { Container, Items, SearchInput } from '@/components';
 import { doNothing } from '@/utils';
 import { Item } from '@/types';
 
@@ -23,11 +24,12 @@ function LinkItems({
     isLoading,
     isSubmitting
 }: LinkItems) {
+    const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
 
-    const navigateToCreateItemPage = () => {
-        navigate('/create_item');
-    };
+    const navigateToCreateItemPage = () => {navigate('/create_item')};
+
+    const onSearchChange = (query: string) => {setSearchQuery(query)};
 
     return (
         <Container>
@@ -40,11 +42,7 @@ function LinkItems({
                 twoOnClick={navigateToCreateItemPage}
                 selected='one'
             />
-            <InputSearch
-                value=''
-                onChange={() => {}}
-                onClear={() => {}}
-            />
+            <SearchInput onChange={onSearchChange} />
             <Button
                 text={`Link Item${selectedItemIDs.length !== 1 ? 's' : ''}`}
                 loading={isSubmitting}
@@ -58,7 +56,7 @@ function LinkItems({
                 <LoadingSpinner />
             ) : (
                 <Items
-                    items={items}
+                    items={items.filter(item => item.name.includes(searchQuery))}
                     selectedItemIDs={selectedItemIDs}
                     onItemSelectionChange={onItemSelectionChange}
                 />
