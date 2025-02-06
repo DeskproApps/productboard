@@ -4,10 +4,15 @@ import { Item as ItemType } from '@/types';
 
 interface Items {
     items: ItemType[];
-    onChange: (itemID: ItemType['id']) => void;
+    selectedItemIDs: ItemType['id'][];
+    onItemSelectionChange: (item: ItemType) => void;
 };
 
-function Items({ items, onChange }: Items) {
+function Items({
+    items,
+    selectedItemIDs,
+    onItemSelectionChange
+}: Items) {
     if (!Array.isArray(items)) return <NoFound />
     
     if (items.length === 0) return <NoFound text='No ProductBoard Items Found' />
@@ -18,8 +23,8 @@ function Items({ items, onChange }: Items) {
                 <Item
                     key={item.id}
                     item={item}
-                    checked={false}
-                    onChange={() => onChange(item.id)}
+                    checked={selectedItemIDs.some(ID => item.id === ID)}
+                    onChange={() => onItemSelectionChange(item)}
                 />
             ))}
         </>

@@ -8,12 +8,20 @@ import { Item } from '@/types';
 
 interface LinkItems {
     items: Item[];
+    selectedItemIDs: Item['id'][];
+    onItemSelectionChange: (item: Item) => void;
+    onLinkTasks: () => void;
     isLoading: boolean;
+    isSubmitting: boolean;
 };
 
 function LinkItems({
     items,
-    isLoading
+    selectedItemIDs,
+    onItemSelectionChange,
+    onLinkTasks,
+    isLoading,
+    isSubmitting
 }: LinkItems) {
     const navigate = useNavigate();
 
@@ -38,9 +46,9 @@ function LinkItems({
                 onClear={() => {}}
             />
             <Button
-                text='Link Items'
-                disabled={false}
-                onClick={() => {}}
+                text={`Link Item${selectedItemIDs.length !== 1 ? 's' : ''}`}
+                disabled={isSubmitting}
+                onClick={onLinkTasks}
             />
             <HorizontalDivider
                 style={{marginTop: '10px', marginBottom: '10px'}}
@@ -50,7 +58,8 @@ function LinkItems({
             ) : (
                 <Items
                     items={items}
-                    onChange={() => {}}
+                    selectedItemIDs={selectedItemIDs}
+                    onItemSelectionChange={onItemSelectionChange}
                 />
             )}
         </Container>
