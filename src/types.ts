@@ -22,8 +22,15 @@ export type Product = {
     link: string;
 };
 
+export type Objective = {
+    id: string;
+    name: string;
+    link: string;
+};
+
 export type Item =
-    | Product;
+    | Product
+    | Objective;
 
 export type Payload = // app events
     | {type: 'logOut'};
