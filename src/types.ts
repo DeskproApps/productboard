@@ -1,3 +1,4 @@
+import { Reducer } from 'react';
 import { DropdownValueType } from '@deskpro/deskpro-ui';
 
 export type TicketData = {
@@ -11,9 +12,6 @@ export type TicketData = {
 export type Settings = {
     client_id: string;
     client_secret: string;
-    // temporary
-    access_token: string;
-    refresh_token: string;
 };
 
 export type Option<Value = unknown> = Omit<DropdownValueType<Value>, 'subItems'>;
@@ -26,3 +24,16 @@ export type Objective = {
 
 export type Item =
     | Objective;
+
+// store context
+
+export type State = {
+    isAuth: boolean;
+};
+
+export type Action =
+    | {type: 'setAuth', payload: boolean};
+
+export type StoreReducer = Reducer<State, Action>;
+
+export type Dispatch = (action: Action) => void;

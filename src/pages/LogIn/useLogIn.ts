@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { OAuth2StaticCallbackUrl, useDeskproAppClient, useDeskproLatestAppContext, useInitialisedDeskproAppClient } from '@deskpro/app-sdk';
 import { v4 as uuid } from 'uuid';
+import { useStore } from '@/context/Store';
 import { useAsyncError } from '@/hooks';
 import { getAccessAndRefreshTokens, setAccessToken, setRefreshToken } from '@/services';
 import { Settings } from '@/types';
-import { AUTHENTICATION_USER_STATE_PATH } from '@/constants';
 
 export function useLogIn() {
     const { client } = useDeskproAppClient();
@@ -14,6 +15,8 @@ export function useLogIn() {
     const [callback, setCallback] = useState<OAuth2StaticCallbackUrl | null>(null);
     const [authURL, setAuthURL] = useState<string | null>(null);
     const key = useMemo(() => uuid(), []);
+    const [_, dispatch] = useStore();
+    const navigate = useNavigate();
     const { asyncErrorHandler } = useAsyncError();
 
     useInitialisedDeskproAppClient(client => {
@@ -41,16 +44,26 @@ export function useLogIn() {
         if (!callback?.poll || !client || !context) return;
 
         callback.poll()
-            .then(({ token }) => getAccessAndRefreshTokens({
-                token,
-                client,
-                context,
-                redirectURI: callback.callbackUrl
-            }))
-            .then(({ access_token, refresh_token }) => {
-                setAccessToken({ token: access_token, client });
-                setRefreshToken({ token: refresh_token, client });
-                client.setUserState(AUTHENTICATION_USER_STATE_PATH, 'true');
+            .then(({ token }) => {
+                setIsAuthenticating(true);
+
+                return getAccessAndRefreshTokens({
+                    token,
+                    client,
+                    context,
+                    redirectURI: callback.callbackUrl
+                });
+            })
+            .then(({ access_token, refresh_token }) => Promise.all([
+                setAccessToken({ token: access_token, client }),
+                setRefreshToken({ token: refresh_token, client })
+            ]))
+            .then(() => {
+                dispatch({
+                    type: 'setAuth',
+                    payload: true
+                });
+                navigate('/link_items');
             })
             .catch(asyncErrorHandler)
             .finally(() => {
@@ -59,8 +72,8 @@ export function useLogIn() {
     }, [callback?.poll, client, context, callback?.callbackUrl]);
 
     return {
-        isAuthenticating,
         authURL,
+        isLoading: isAuthenticating,
         poll
     };
 };

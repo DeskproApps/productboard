@@ -16,7 +16,7 @@ function LogIn({ authURL, isLoading, onLogIn }: LogIn) {
                 text='Log In'
                 target='_blank'
                 href={authURL ?? '#'}
-                loading={isLoading}
+                loading={!authURL || isLoading}
                 disabled={!authURL || isLoading}
                 onClick={onLogIn}
             />

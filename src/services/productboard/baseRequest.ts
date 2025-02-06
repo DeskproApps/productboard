@@ -3,21 +3,21 @@ import { Settings } from '@/types';
 
 interface BaseRequest {
     client: IDeskproClient;
-    context: Context<unknown, Settings>;
     endpoint: string;
     method?: 'GET' | 'POST';
     queryParameters?: URLSearchParams;
     data?: FormData | Record<string, string>;
 };
 
-async function baseRequest({
+type BaseRequestType = <T>(parameters: BaseRequest) => Promise<T>;
+
+const baseRequest: BaseRequestType = async ({
     client,
-    context,
     endpoint,
     method = 'GET',
     queryParameters = new URLSearchParams(),
     data
-}: BaseRequest) {
+}) => {
     const fetch = await proxyFetch(client);
 
     // URL
@@ -31,7 +31,8 @@ async function baseRequest({
 
     const headers: Record<string, string> = {};
 
-    if (context?.settings.access_token) headers['authorization'] = `Bearer ${context.settings.access_token}`;
+    headers['authorization'] = 'Bearer [user[oauth2/access_token]]';
+    headers['x-version'] = '1';
 
     // body
 
