@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDeskproAppClient } from '@deskpro/app-sdk';
 import LinkItems from './LinkItems';
 import { useSetTitle } from '@/hooks';
-import { getObjectives } from '@/services';
+import { getFeatures } from '@/services';
 import { Item } from '@/types';
 
 function LinkItemsPage() {
@@ -26,7 +26,7 @@ function LinkItemsPage() {
     useEffect(() => {
         if (!client) return;
 
-        getObjectives({ client })
+        getFeatures({ client })
             .then(setItems);
     }, [client]);
 

@@ -28,22 +28,22 @@ function Info({ item, onTitleClick }: Info) {
                 link={item.link}
             />
             <TwoSider
-                leftLabel='Board'
-                leftText={<OverflowText>Board</OverflowText>}
+                leftLabel='Parent'
+                leftText={<OverflowText>Parent</OverflowText>}
                 rightLabel='Timeframe'
-                rightText={<OverflowText>TimeFrame</OverflowText>}
+                rightText={<OverflowText>{item.timeframe}</OverflowText>}
             />
             <TwoSider
                 leftLabel='Owner'
-                leftText={<OverflowText>Owner</OverflowText>}
+                leftText={<OverflowText>{item.owner}</OverflowText>}
                 rightLabel='Deskpro Tickets'
                 rightText={<OverflowText>DeskPro Tickets</OverflowText>}
             />
             <TwoSider
                 leftLabel='Status'
-                leftText={<OverflowText>Status</OverflowText>}
+                leftText={<OverflowText>{item.status}</OverflowText>}
                 rightLabel='Effort'
-                rightText={<OverflowText>Effort</OverflowText>}
+                rightText={<OverflowText>X</OverflowText>}
             />
         </>
     );

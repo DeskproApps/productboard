@@ -9,3 +9,4 @@ export { default as getAccessAndRefreshTokens } from './productboard/getAccessAn
 export { default as checkIsAuth } from './productboard/checkIsAuth';
 export { default as getProducts } from './productboard/getProducts';
 export { default as getObjectives } from './productboard/getObjectives';
+export { default as getFeatures } from './productboard/getFeatures';
