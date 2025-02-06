@@ -1,8 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import { HorizontalDivider, LoadingSpinner, TwoButtonGroup } from '@deskpro/app-sdk';
 import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
-import { Container, InputSearch, Items } from '@/components';
-import { Item } from '@/types';
 import { Button } from '@deskpro/deskpro-ui';
+import { Container, InputSearch, Items } from '@/components';
+import { doNothing } from '@/utils';
+import { Item } from '@/types';
 
 interface LinkItems {
     items: Item[];
@@ -13,15 +15,21 @@ function LinkItems({
     items,
     isLoading
 }: LinkItems) {
+    const navigate = useNavigate();
+
+    const navigateToCreateItemPage = () => {
+        navigate('/create_item');
+    };
+
     return (
         <Container>
             <TwoButtonGroup
                 oneLabel='Find Item'
                 oneIcon={faSearch}
-                oneOnClick={() => {}}
+                oneOnClick={doNothing}
                 twoLabel='Create Item'
                 twoIcon={faPlus}
-                twoOnClick={() => {}}
+                twoOnClick={navigateToCreateItemPage}
                 selected='one'
             />
             <InputSearch
