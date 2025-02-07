@@ -1,5 +1,5 @@
-import { Title, useDeskproAppClient } from '@deskpro/app-sdk';
-import { Link, Logo, OverflowText, TwoSider } from '@/components';
+import { useDeskproAppClient } from '@deskpro/app-sdk';
+import { Link, Logo, OverflowText, Title, TwoSider } from '@/components';
 import { Item } from '@/types';
 import { useEffect, useState } from 'react';
 import { getLinkedDeskproEntitiesCount } from '@/services';

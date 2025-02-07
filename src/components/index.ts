@@ -10,3 +10,4 @@ export { default as NoFound } from './NoFound/NoFound';
 export { default as TwoSider } from './TwoSider/TwoSider';
 export { default as TextBlockWithLabel } from './TextBlockWithLabel/TextBlockWithLabel';
 export { default as OverflowText } from './OverflowText/OverflowText';
+export { default as Title } from './Title/Title';
