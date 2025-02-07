@@ -15,7 +15,7 @@ export function useLogIn() {
     const [callback, setCallback] = useState<OAuth2StaticCallbackUrl | null>(null);
     const [authURL, setAuthURL] = useState<string | null>(null);
     const key = useMemo(() => uuid(), []);
-    const [state, dispatch] = useStore();
+    const [_, dispatch] = useStore();
     const navigate = useNavigate();
     const { asyncErrorHandler } = useAsyncError();
 

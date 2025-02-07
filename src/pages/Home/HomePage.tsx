@@ -123,11 +123,11 @@ function HomePage() {
                 <Fragment key={linkedItem.id}>
                     <Item
                         item={linkedItem}
+                        showCheckbox={false}
                         checked={selectedItemIDs.some(ID => linkedItem.id === ID)}
                         onCheck={() => handleItemSelectionChange(linkedItem)}
                         onTitleClick={() => {navigate('/home')}}                   
                     />
-                    <HorizontalDivider style={{marginBottom: 6}} />
                 </Fragment>
             ))}
         </Container>

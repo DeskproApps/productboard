@@ -20,22 +20,29 @@ const Body = styled.div`
 
 interface Item {
     item: ItemType;
+    showCheckbox?: boolean;
     checked?: boolean;
     onCheck?: () => void;
     onTitleClick?: () => void;
 };
 
-function Item({ item, checked = false, onCheck, onTitleClick }: Item) {
+function Item({
+    item,
+    showCheckbox = true,
+    checked = false,
+    onCheck,
+    onTitleClick
+}: Item) {
     return (
         <>
             <Container>
                 <Media>
-                    <Checkbox
+                    {showCheckbox && <Checkbox
                         containerStyle={{marginTop: 4}}
                         size={12}
                         checked={checked}
                         onChange={onCheck}
-                    />
+                    />}
                 </Media>
                 <Body>
                     <Info
