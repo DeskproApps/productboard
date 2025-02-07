@@ -1,5 +1,5 @@
 import { useDeskproAppClient } from '@deskpro/app-sdk';
-import { Link, Logo, OverflowText, Title, TwoSider } from '@/components';
+import { Link, Logo, OverflowText, StatusBadge, Title, TwoSider } from '@/components';
 import { Item } from '@/types';
 import { useEffect, useState } from 'react';
 import { getLinkedDeskproEntitiesCount } from '@/services';
@@ -32,6 +32,12 @@ function Info({ item, onTitleClick }: Info) {
         </Link>
     );
 
+    const Status = () => (
+        <OverflowText>
+            <StatusBadge text={item.status} />
+        </OverflowText>
+    );
+
     return (
         <>
             <Title
@@ -53,7 +59,7 @@ function Info({ item, onTitleClick }: Info) {
             />
             <TwoSider
                 leftLabel='Status'
-                leftText={<OverflowText>{item.status}</OverflowText>}
+                leftText={<Status />}
                 rightLabel='Effort'
                 rightText={<OverflowText>X</OverflowText>}
             />

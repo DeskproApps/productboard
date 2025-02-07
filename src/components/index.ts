@@ -11,3 +11,4 @@ export { default as TwoSider } from './TwoSider/TwoSider';
 export { default as TextBlockWithLabel } from './TextBlockWithLabel/TextBlockWithLabel';
 export { default as OverflowText } from './OverflowText/OverflowText';
 export { default as Title } from './Title/Title';
+export { default as StatusBadge } from './StatusBadge/StatusBadge';
