@@ -1,8 +1,8 @@
+import { useEffect, useState } from 'react';
 import { useDeskproAppClient } from '@deskpro/app-sdk';
 import { Link, Logo, OverflowText, StatusBadge, TextBlockWithLabel, Title, TwoSider } from '@/components';
-import { Item } from '@/types';
-import { useEffect, useState } from 'react';
-import { getLinkedDeskproEntitiesCount } from '@/services';
+import { getLinkedDeskproEntitiesCount, getProduct } from '@/services';
+import { Item, Parent, Product } from '@/types';
 
 interface Info {
     item: Item;
@@ -11,6 +11,7 @@ interface Info {
 
 function Info({ item, onTitleClick }: Info) {
     const { client } = useDeskproAppClient();
+    const [parent, setParent] = useState<Product>();
     const [linkedTicketsCount, setLinkedTicketsCount] = useState(0);
 
     useEffect(() => {
@@ -32,6 +33,29 @@ function Info({ item, onTitleClick }: Info) {
         </Link>
     );
 
+    useEffect(() => {
+        if (!client) return;
+
+        if (item.parent) {
+            const parentType = Object.keys(item.parent)[0] as Parent;
+
+            if (parentType === 'product') {
+                getProduct({
+                    id: item.parent.product.id,
+                    client
+                })
+                    .then(setParent)
+                    .catch(setParent)
+            };
+        };
+    }, [client, item.parent]);
+
+    const ParentLink = () => (
+        <OverflowText>
+            <Link href={parent?.link} target='_blank'>{parent?.name || '—'}</Link>
+        </OverflowText>
+    );
+
     const Status = () => (
         <OverflowText>
             <StatusBadge text={item.status} />
@@ -47,7 +71,7 @@ function Info({ item, onTitleClick }: Info) {
             />
             <TwoSider
                 leftLabel='Parent'
-                leftText={<OverflowText>Parent</OverflowText>}
+                leftText={<ParentLink />}
                 rightLabel='Timeframe'
                 rightText={<OverflowText>{item.timeframe}</OverflowText>}
             />

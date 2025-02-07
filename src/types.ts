@@ -28,6 +28,9 @@ export type Objective = {
     link: string;
 };
 
+export type Parent = 
+    | 'product';
+
 export type Feature = {
     id: string;
     name: string;
@@ -35,6 +38,11 @@ export type Feature = {
     owner: string;
     status: string;
     timeframe: string;
+    parent: {
+        [key in Parent]: {
+            id: string;
+        };
+    };
 };
 
 export type Item =

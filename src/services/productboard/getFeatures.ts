@@ -1,6 +1,6 @@
 import { IDeskproClient } from '@deskpro/app-sdk';
 import baseRequest from './baseRequest';
-import { Feature,  } from '@/types';
+import { Feature, Parent } from '@/types';
 
 interface GetFeaturesResponse {
     data: {
@@ -18,6 +18,13 @@ interface GetFeaturesResponse {
         timeframe: {
             startDate: string;
             endDate: string;
+        };
+        parent: {
+            [key in Parent]: {
+                product: {
+                    id: string;
+                }
+            };
         };
     }[];
     links: {
@@ -64,7 +71,8 @@ async function getFeatures({ client }: GetFeatures): Promise<Feature[]> {
                     link: feature.links.html,
                     owner: feature.owner.email,
                     status: feature.status.name,
-                    timeframe
+                    timeframe,
+                    parent: feature.parent
                 };
             });
 
