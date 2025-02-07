@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDeskproAppClient } from '@deskpro/app-sdk';
 import { Link, Logo, OverflowText, StatusBadge, TextBlockWithLabel, Title, TwoSider } from '@/components';
 import { getLinkedDeskproEntitiesCount, getProduct } from '@/services';
@@ -6,13 +7,13 @@ import { Item, Parent, Product } from '@/types';
 
 interface Info {
     item: Item;
-    onTitleClick?: () => void;
 };
 
-function Info({ item, onTitleClick }: Info) {
+function Info({ item }: Info) {
     const { client } = useDeskproAppClient();
     const [parent, setParent] = useState<Product>();
     const [linkedTicketsCount, setLinkedTicketsCount] = useState(0);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!client) return;
@@ -26,7 +27,7 @@ function Info({ item, onTitleClick }: Info) {
             href='#'
             onClick={event => {
                 event.preventDefault();
-                onTitleClick?.();
+                navigate(`/item/${item.id}`);
             }}
         >
             {item.name}

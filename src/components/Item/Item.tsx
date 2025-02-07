@@ -23,15 +23,13 @@ interface Item {
     showCheckbox?: boolean;
     checked?: boolean;
     onCheck?: () => void;
-    onTitleClick?: () => void;
 };
 
 function Item({
     item,
     showCheckbox = true,
     checked = false,
-    onCheck,
-    onTitleClick
+    onCheck
 }: Item) {
     return (
         <>
@@ -45,10 +43,7 @@ function Item({
                     />}
                 </Media>
                 <Body>
-                    <Info
-                        item={item}
-                        onTitleClick={onTitleClick}
-                    />
+                    <Info item={item} />
                 </Body>
             </Container>
             <HorizontalDivider style={{marginBottom: 9}} />

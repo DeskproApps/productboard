@@ -31,18 +31,26 @@ export type Objective = {
 export type Parent = 
     | 'product';
 
+export type TimeframeObject = {
+    startDate: string;
+    endDate: string;
+};
+
+export type ParentObject = {
+    [key in Parent]: {
+        id: string;
+    };
+};
+
 export type Feature = {
     id: string;
     name: string;
+    description: string;
     link: string;
     owner: string;
     status: string;
     timeframe: string;
-    parent: {
-        [key in Parent]: {
-            id: string;
-        };
-    };
+    parent: ParentObject;
 };
 
 export type Item =
@@ -50,7 +58,8 @@ export type Item =
 
 export type Payload = // app events
     | {type: 'logOut'}
-    | {type: 'changePage', path: string};
+    | {type: 'changePage', path: string}
+    | {type: 'unlinkItem', id: string};
 
 // store context
 

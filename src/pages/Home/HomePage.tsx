@@ -1,9 +1,9 @@
 import { Fragment, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HorizontalDivider, useDeskproAppClient, useDeskproAppEvents, useDeskproElements, useDeskproLatestAppContext, useInitialisedDeskproAppClient } from '@deskpro/app-sdk';
-import { Button, P1 } from '@deskpro/deskpro-ui';
+import { P1 } from '@deskpro/deskpro-ui';
 import { Container, Item } from '@/components';
-import { useAsyncError, useSetTitle } from '@/hooks';
+import { useSetTitle } from '@/hooks';
 import { getFeatures, getRegisteredItemIDs } from '@/services';
 import { Item as ItemType, Payload, TicketData } from '@/types';
 
@@ -15,8 +15,6 @@ function HomePage() {
     const [linkedItems, setLinkedItems] = useState<ItemType[]>([]);
     const [linkedItemIDs, setLinkedItemIDs] = useState<ItemType['id'][]>([]);
     const [selectedItemIDs, setSelectedItemIDs] = useState<ItemType['id'][]>([]);
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const { asyncErrorHandler } = useAsyncError();
     const navigate = useNavigate();
 
     useSetTitle('ProductBoard');
@@ -90,32 +88,8 @@ function HomePage() {
         setSelectedItemIDs(newItemIDsSelection);
     };
 
-    const handleUnlinkTasks = () => {
-        if (!client || !ticketID || !selectedItemIDs.length) return;
-
-        setIsSubmitting(true);
-
-        Promise.all([
-            ...selectedItemIDs.map(ID => client
-                .getEntityAssociation('linkedProductboardItems', ticketID)
-                .delete(ID)
-            )
-        ])
-            .then(() => {
-                setIsSubmitting(false);
-                navigate('/link_items');
-            })
-            .catch(asyncErrorHandler);
-    };
-
     return (
         <Container>
-            <Button
-                text={`Unlink Item${selectedItemIDs.length !== 1 ? 's' : ''}`}
-                loading={isSubmitting}
-                disabled={selectedItemIDs.length < 1}
-                onClick={handleUnlinkTasks}
-            />
             <HorizontalDivider style={{marginTop: '10px', marginBottom: '10px'}} />
             {!linkedItems.length ? (
                 <P1>No Linked Items</P1>
@@ -126,7 +100,6 @@ function HomePage() {
                         showCheckbox={false}
                         checked={selectedItemIDs.some(ID => linkedItem.id === ID)}
                         onCheck={() => handleItemSelectionChange(linkedItem)}
-                        onTitleClick={() => {navigate('/home')}}                   
                     />
                 </Fragment>
             ))}

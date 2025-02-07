@@ -1,8 +1,9 @@
 import { IDeskproClient } from '@deskpro/app-sdk';
 import baseRequest from './baseRequest';
-import { Feature, Parent } from '@/types';
+import { getTimeframe } from './utils/timeframe';
+import { Feature, Parent, TimeframeObject } from '@/types';
 
-interface GetFeaturesResponse {
+type GetFeaturesResponse = {
     data: {
         id: string;
         name: string;
@@ -15,10 +16,7 @@ interface GetFeaturesResponse {
         status: {
             name: string;
         };
-        timeframe: {
-            startDate: string;
-            endDate: string;
-        };
+        timeframe: TimeframeObject;
         parent: {
             [key in Parent]: {
                 product: {
@@ -47,34 +45,15 @@ async function getFeatures({ client }: GetFeatures): Promise<Feature[]> {
                 endpoint: nextPage
             });
 
-            const mappedFeatures = response.data.map(feature => {
-                let timeframe;
-
-                if (isNaN(Date.parse(feature.timeframe.startDate))) timeframe = '—';
-                else {
-                    const startDate =  new Date(feature.timeframe.startDate).toLocaleDateString('en-GB', {
-                        day: '2-digit',
-                        month: 'short',
-                        year: 'numeric'
-                    });
-                    const endDate =  new Date(feature.timeframe.endDate).toLocaleDateString('en-GB', {
-                        day: '2-digit',
-                        month: 'short',
-                        year: 'numeric'
-                    });
-                    timeframe = `${startDate} — ${endDate}`;
-                };
-                
-                return {
-                    id: feature.id,
-                    name: feature.name,
-                    link: feature.links.html,
-                    owner: feature.owner.email,
-                    status: feature.status.name,
-                    timeframe,
-                    parent: feature.parent
-                };
-            });
+            const mappedFeatures = response.data.map(feature => ({
+                id: feature.id,
+                name: feature.name,
+                link: feature.links.html,
+                owner: feature.owner.email,
+                status: feature.status.name,
+                timeframe: getTimeframe(feature.timeframe),
+                parent: feature.parent
+            }));
 
             features.push(mappedFeatures);
 

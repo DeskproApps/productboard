@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { LoadingSpinner, useDeskproAppEvents, useDeskproElements } from '@deskpro/app-sdk';
-import { AdminCallbackPage, CreateItemPage, HomePage, InitialPage, LinkItemsPage, LogInPage,  } from '@/pages';
+import { AdminCallbackPage, CreateItemPage, HomePage, InitialPage, ItemPage, LinkItemsPage, LogInPage,  } from '@/pages';
 import { useStore } from './context/Store';
 import { useLogIn } from './pages/LogIn/useLogIn';
 import { Payload } from './types';
@@ -45,6 +45,8 @@ function App() {
             <Route path='/home' element={<HomePage />} />
             <Route path='/link_items' element={<LinkItemsPage />} />
             <Route path='/create_item' element={<CreateItemPage />} />
+            <Route path='/item/:id' element={<ItemPage />} />
+            {/* <Route path="*" element={<NotFoundPage />} /> */}
         </Routes>
     );
 };
