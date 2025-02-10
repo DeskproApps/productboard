@@ -25,7 +25,7 @@ const baseRequest: BaseRequestType = async ({
     const baseURL = BASE_REQUEST_BASE_API_URL;
     let requestURL = `${baseURL}${endpoint}`;
 
-    if (queryParameters.size > 0) requestURL += `?${queryParameters}`;
+    if (queryParameters.size > 0) requestURL += `?${queryParameters.toString()}`;
 
     // headers
 
@@ -50,12 +50,16 @@ const baseRequest: BaseRequestType = async ({
     const response = await fetch(requestURL, { method, headers, body });
 
     if (response.status < 200 || response.status >= 400) {
-        throw new Error('ProductBoard API Error:', await response.json());
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        const errorResponse = await response.json();
+
+        throw new Error(`ProductBoard API Error: ${JSON.stringify(errorResponse)}`);
     } else {
         try {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
             return await response.json();
         } catch (error) {
-            console.error('ProductBoard API Error 2:', error);
+            return undefined;
         };
     };
 };

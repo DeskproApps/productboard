@@ -38,9 +38,9 @@ function useLogIn() {
                 state: key
             });
 
-            setAuthURL(`${baseURL}?${queryParameters}`);
+            setAuthURL(`${baseURL}?${queryParameters.toString()}`);
         };
-    }, [callback?.callbackUrl, clientID, key]);
+    }, [callback, clientID, key]);
 
     const poll = useCallback(() => {
         if (!callback?.poll || !client || !context) return;
@@ -56,10 +56,18 @@ function useLogIn() {
                     redirectURI: callback.callbackUrl
                 });
             })
-            .then(({ access_token, refresh_token }) => Promise.all([
-                setAccessToken({ token: access_token, client }),
-                setRefreshToken({ token: refresh_token, client })
-            ]))
+            .then(response => {
+                if (!response?.access_token || !response?.refresh_token) {
+                    throw new Error('no access and refresh tokens');
+                };
+
+                const { access_token, refresh_token } = response;
+
+                return Promise.all([
+                    setAccessToken({ token: access_token, client }),
+                    setRefreshToken({ token: refresh_token, client })
+                ]);
+            })
             .then(() => {
                 dispatch({
                     type: 'setAuth',

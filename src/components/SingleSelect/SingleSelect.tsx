@@ -11,7 +11,8 @@ const InputStyled = styled(Input)`
 interface SingleSelect {
     label: string;
     hasError: boolean;
-    value: any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    value: any; // component not used yet
     onChange: (option: Option) => void;
     required: boolean;
     options: Option[];
@@ -33,7 +34,8 @@ function SingleSelect({
             selectedIcon={faCheck}
             externalLinkIcon={faExternalLinkAlt}
             placement='bottom-start'
-            inputValue={value?.label || ''}
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+            inputValue={value?.label || ''} // component not used yet
             onSelectOption={onChange}
             hideIcons
             options={options}
