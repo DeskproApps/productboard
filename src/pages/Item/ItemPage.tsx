@@ -76,6 +76,7 @@ function ItemPage() {
             <TextBlockWithLabel
                 label='Description'
                 text={item.description || 'No Description'}
+                isHTML
             />
             <TextBlockWithLabel
                 label='Status'
