@@ -1,5 +1,5 @@
-import { Container } from '@/components';
 import { P1 } from '@deskpro/deskpro-ui';
+import { Container } from '@/components';
 
 function ErrorPage() {
     return (
