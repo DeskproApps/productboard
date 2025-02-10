@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDeskproAppClient } from '@deskpro/app-sdk';
+import { useInitialisedDeskproAppClient } from '@deskpro/app-sdk';
 import { Link, Logo, OverflowText, StatusBadge, TextBlockWithLabel, Title, TwoSider } from '@/components';
 import { useAsyncError } from '@/hooks';
 import { getLinkedDeskproEntitiesCount, getProduct } from '@/services';
@@ -11,19 +11,16 @@ interface Info {
 };
 
 function Info({ item }: Info) {
-    const { client } = useDeskproAppClient();
     const [parent, setParent] = useState<Product>();
     const [linkedTicketsCount, setLinkedTicketsCount] = useState(0);
     const navigate = useNavigate();
     const { asyncErrorHandler } = useAsyncError();
 
-    useEffect(() => {
-        if (!client) return;
-
+    useInitialisedDeskproAppClient(client => {
         getLinkedDeskproEntitiesCount({ client, id: item.id })
             .then(setLinkedTicketsCount)
             .catch(asyncErrorHandler);
-    }, [client, item.id, asyncErrorHandler]);
+    }, [item.id, asyncErrorHandler]);
     
     const ItemTitle = () => (
         <Link
@@ -37,24 +34,22 @@ function Info({ item }: Info) {
         </Link>
     );
 
-    useEffect(() => {
-        if (!client) return;
+    useInitialisedDeskproAppClient(client => {
+        if (!item.parent) return;
 
-        if (item.parent) {
-            const parentType = Object.keys(item.parent)[0] as Parent;
+        const parentType = Object.keys(item.parent)[0] as Parent;
 
-            if (parentType === 'product') {
-                getProduct({
-                    id: item.parent.product.id,
-                    client
+        if (parentType === 'product') {
+            getProduct({
+                id: item.parent.product.id,
+                client
+            })
+                .then(parent => {
+                    parent && setParent(parent);
                 })
-                    .then(parent => {
-                        parent && setParent(parent);
-                    })
-                    .catch(asyncErrorHandler);
-            };
+                .catch(asyncErrorHandler);
         };
-    }, [client, item.parent, asyncErrorHandler]);
+    }, [item.parent, asyncErrorHandler]);
 
     const ParentLink = () => (
         <OverflowText>
