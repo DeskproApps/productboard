@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react';
+import styled from 'styled-components';
 import { CopyToClipboardInput, LoadingSpinner, useInitialisedDeskproAppClient } from '@deskpro/app-sdk';
 import { P1 } from '@deskpro/deskpro-ui';
-import styled from 'styled-components';
 import { v4 as uuid } from 'uuid';
-import { getURLOrigin } from '@/utils';
+import { useAsyncError } from '@/hooks';
 
 const Description = styled(P1)`
     margin-top: 8px;
@@ -13,20 +13,21 @@ const Description = styled(P1)`
 function AdminCallbackPage() {
     const [callbackURL, setCallbackURL] = useState<string | null>(null);
     const key = useMemo(() => uuid(), []);
-    const origin = useMemo(() => getURLOrigin(callbackURL), [callbackURL]);
+    const { asyncErrorHandler } = useAsyncError();
 
-    useInitialisedDeskproAppClient((client) => {
+    useInitialisedDeskproAppClient(client => {
         client.oauth2()
-            .getAdminGenericCallbackUrl(key, /code=(?<code>.+?)&/, /state=(?<state>[^&]+)/)
-            .then(({ callbackUrl }) => setCallbackURL(callbackUrl));
+            .getAdminGenericCallbackUrl(key, /code=(?<token>.+?)&/, /state=(?<key>[^&]+)/)
+            .then(({ callbackUrl }) => {setCallbackURL(callbackUrl)})
+            .catch(asyncErrorHandler);
     }, [key]);
 
-    if (!origin) return (<LoadingSpinner />);
+    if (!callbackURL) return <LoadingSpinner />;
 
     return (
         <>
-            <CopyToClipboardInput value={origin} />
-            <Description>The callback URL origin will be required during ProductBoard app setup</Description>
+            <CopyToClipboardInput value={callbackURL || ''} />
+            <Description>The callback URL origin will be required during Productboard app setup</Description>
         </>
     );
 };

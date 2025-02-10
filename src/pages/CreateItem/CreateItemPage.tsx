@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { TwoButtonGroup } from '@deskpro/app-sdk';
 import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Container } from '@/components';
-import { doNothing } from '@/utils';
+import { doNothing } from '@/utilities';
 
 function CreateItemPage() {
     const navigate = useNavigate();

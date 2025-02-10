@@ -4,7 +4,7 @@ import { HorizontalDivider, LoadingSpinner, TwoButtonGroup } from '@deskpro/app-
 import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '@deskpro/deskpro-ui';
 import { Container, Items, SearchInput } from '@/components';
-import { doNothing } from '@/utils';
+import { doNothing } from '@/utilities';
 import { Item } from '@/types';
 
 interface LinkItems {
