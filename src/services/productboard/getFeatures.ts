@@ -7,6 +7,7 @@ type GetFeaturesResponse = {
     data: {
         id: string;
         name: string;
+        description: string;
         links: {
             html: string;
         };
@@ -19,9 +20,7 @@ type GetFeaturesResponse = {
         timeframe: TimeframeObject;
         parent: {
             [key in Parent]: {
-                product: {
-                    id: string;
-                }
+                id: string;
             };
         };
     }[];
@@ -48,6 +47,7 @@ async function getFeatures({ client }: GetFeatures): Promise<Feature[]> {
             const mappedFeatures = response.data.map(feature => ({
                 id: feature.id,
                 name: feature.name,
+                description: feature.description,
                 link: feature.links.html,
                 owner: feature.owner.email,
                 status: feature.status.name,
