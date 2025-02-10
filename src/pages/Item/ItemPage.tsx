@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useDeskproAppClient, useDeskproAppEvents, useDeskproElements } from '@deskpro/app-sdk';
+import { LoadingSpinner, useDeskproAppClient, useDeskproAppEvents, useDeskproElements } from '@deskpro/app-sdk';
 import { Container, Logo, StatusBadge, TextBlockWithLabel, Title } from '@/components';
 import { useSetTitle, useUnlinkItem } from '@/hooks';
 import { getFeature } from '@/services';
@@ -11,7 +11,7 @@ function ItemPage() {
     const navigate = useNavigate();
     const { id } = useParams();
     const [item, setItem] = useState<Item>();
-    const { unlink } = useUnlinkItem();
+    const { unlink, isLoading } = useUnlinkItem();
 
     useSetTitle('Productboard');
 
@@ -49,13 +49,12 @@ function ItemPage() {
                     break;
 
                 case 'unlinkItem':
-                    console.log('unlinking')
                     item && unlink(item);
                     
                     break;
             };
         }
-    });
+    }, [navigate, item]);
 
     useEffect(() => {
         if (!client || !id) return;
@@ -65,6 +64,14 @@ function ItemPage() {
     }, [client, id]);
 
     if (!item?.id) return;
+
+    if (isLoading) {
+        return (
+            <Container>
+                <LoadingSpinner />
+            </Container>
+        );
+    };
 
     return (
         <Container>

@@ -23,8 +23,8 @@ function useUnlinkItem() {
             .catch(asyncErrorHandler)
             .finally(() => {
                 setIsLoading(false);
-                navigate('/link_items');
-            })
+                navigate('/home');
+            });
     }, [client, ticketID]);
 
     return {
