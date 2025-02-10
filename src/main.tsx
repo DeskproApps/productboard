@@ -6,6 +6,7 @@ import { DeskproAppProvider, LoadingSpinner } from '@deskpro/app-sdk';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@/query';
 import StoreProvider from '@/context/Store';
+import { ErrorPage } from '@/pages';
 import App from './App';
 import '@deskpro/deskpro-ui/dist/deskpro-ui.css';
 import '@deskpro/deskpro-ui/dist/deskpro-custom-icons.css';
@@ -19,7 +20,7 @@ root.render((
             <HashRouter>
                 <QueryClientProvider client={queryClient}>
                     <Suspense fallback={<LoadingSpinner />}>
-                        <ErrorBoundary fallback={<>here was an error!</>}>
+                        <ErrorBoundary fallback={<ErrorPage />}>
                             <StoreProvider>
                                 <App />
                             </StoreProvider>
