@@ -45,8 +45,9 @@ function Info({ item }: Info) {
                     id: item.parent.product.id,
                     client
                 })
-                    .then(setParent)
-                    .catch(setParent)
+                    .then(parent => {
+                        parent && setParent(parent);
+                    });
             };
         };
     }, [client, item.parent]);

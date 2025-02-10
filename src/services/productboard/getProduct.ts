@@ -2,7 +2,7 @@ import { IDeskproClient } from '@deskpro/app-sdk';
 import baseRequest from './baseRequest';
 import { Product } from '@/types';
 
-interface GetProductResponse {
+type GetProductResponse = {
     data: {
         id: string;
         name: string;
@@ -17,14 +17,14 @@ interface GetProduct {
     client: IDeskproClient;
 };
 
-async function getProduct({ id, client }: GetProduct): Promise<Product> {
+async function getProduct({ id, client }: GetProduct): Promise<Product | undefined> {
     try {
         const response: GetProductResponse = await baseRequest<GetProductResponse>({
             client,
             endpoint: `/products/${id}`
         });
 
-        if (!response.data) throw new Error('no products');
+        if (!response.data) throw new Error('no product');
 
         const product = response.data;
 
@@ -34,13 +34,9 @@ async function getProduct({ id, client }: GetProduct): Promise<Product> {
             link: product.links.html
         };
     } catch (error: any) {
-        console.log('error getting products:', error);
+        console.log('error getting product:', error);
 
-        return {
-            id: '',
-            name: '',
-            link: ''
-        };
+        return undefined;
     };
 };
 

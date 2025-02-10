@@ -1,6 +1,6 @@
 import { IDeskproClient } from '@deskpro/app-sdk';
 import baseRequest from './baseRequest';
-import { getTimeframe } from './utils/timeframe';
+import { getTimeframe } from './utilities/timeframe';
 import { Feature, Parent, TimeframeObject } from '@/types';
 
 type GetFeaturesResponse = {
@@ -33,7 +33,7 @@ interface GetFeatures {
     client: IDeskproClient;
 };
 
-async function getFeatures({ client }: GetFeatures): Promise<Feature[]> {
+async function getFeatures({ client }: GetFeatures): Promise<Feature[] | undefined> {
     try {
         let features: Feature[][] = [];
         let nextPage: string | null = '/features';
@@ -72,7 +72,7 @@ async function getFeatures({ client }: GetFeatures): Promise<Feature[]> {
     } catch (error: any) {
         console.log('error getting features:', error);
 
-        return [];
+        return undefined;
     };
 };
 

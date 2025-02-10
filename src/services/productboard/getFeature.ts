@@ -1,6 +1,6 @@
 import { IDeskproClient } from '@deskpro/app-sdk';
 import baseRequest from './baseRequest';
-import { getTimeframe } from './utils/timeframe';
+import { getTimeframe } from './utilities/timeframe';
 import { Feature, ParentObject, TimeframeObject } from '@/types';
 
 type GetFeatureResponse = {
@@ -49,7 +49,7 @@ async function getFeature({ id, client }: GetFeature): Promise<Feature | undefin
             parent: feature.parent
         };
     } catch (error: any) {
-        console.log('error getting features:', error);
+        console.log('error getting feature:', error);
 
         return undefined;
     };

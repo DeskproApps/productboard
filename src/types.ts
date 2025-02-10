@@ -22,12 +22,6 @@ export type Product = {
     link: string;
 };
 
-export type Objective = {
-    id: string;
-    name: string;
-    link: string;
-};
-
 export type Parent = 
     | 'product';
 

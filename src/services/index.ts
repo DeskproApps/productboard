@@ -10,7 +10,5 @@ export { default as getLinkedDeskproEntitiesCount } from './deskpro/getLinkedDes
 export { default as getAccessAndRefreshTokens } from './productboard/getAccessAndRefreshTokens';
 export { default as checkIsAuth } from './productboard/checkIsAuth';
 export { default as getProduct } from './productboard/getProduct';
-export { default as getProducts } from './productboard/getProducts';
-export { default as getObjectives } from './productboard/getObjectives';
 export { default as getFeature } from './productboard/getFeature';
 export { default as getFeatures } from './productboard/getFeatures';

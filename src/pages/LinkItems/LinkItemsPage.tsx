@@ -55,7 +55,9 @@ function LinkItemsPage() {
         if (!client) return;
 
         getFeatures({ client })
-            .then(setItems);
+            .then(features => {
+                features && setItems(features);
+            });
     }, [client]);
 
     useEffect(() => {
@@ -63,7 +65,7 @@ function LinkItemsPage() {
 
         getRegisteredItemIDs({ client, ticketID })
             .then(setSelectedItemIDs)
-            .catch(() => {setSelectedItemIDs([])})
+            .catch(() => {setSelectedItemIDs([])});
     }, [client, ticketID])
 
     useInitialisedDeskproAppClient(client => {
