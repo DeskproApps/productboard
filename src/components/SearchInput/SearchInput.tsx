@@ -17,7 +17,7 @@ function SearchInput({
     required = false,
     disabled = false,
     isFetching = false,
-    onChange,
+    onChange
 }: SearchInput) {
     const [search, setSearch] = useState('');
 

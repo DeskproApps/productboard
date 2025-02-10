@@ -1,5 +1,5 @@
-import { Dropdown, Input } from '@deskpro/deskpro-ui';
 import styled from 'styled-components';
+import { Dropdown, Input } from '@deskpro/deskpro-ui';
 import { faCaretDown, faCheck, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { Label } from '@/components';
 import { Option } from '@/types';
@@ -14,7 +14,7 @@ interface SingleSelect {
     value: any;
     onChange: (option: Option) => void;
     required: boolean;
-    options: Option[]
+    options: Option[];
 };
 
 function SingleSelect({

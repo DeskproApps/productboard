@@ -49,9 +49,7 @@ function LinkItems({
                 disabled={selectedItemIDs.length < 1}
                 onClick={onLinkTasks}
             />
-            <HorizontalDivider
-                style={{marginTop: '10px', marginBottom: '10px'}}
-            />
+            <HorizontalDivider style={{marginTop: '10px', marginBottom: '10px'}} />
             {isLoading ? (
                 <LoadingSpinner />
             ) : (
