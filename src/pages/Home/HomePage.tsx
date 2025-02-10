@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { HorizontalDivider, useDeskproAppClient, useDeskproAppEvents, useDeskproElements, useDeskproLatestAppContext, useInitialisedDeskproAppClient } from '@deskpro/app-sdk';
 import { P1 } from '@deskpro/deskpro-ui';
 import { Container, Item } from '@/components';
-import { useLogIn, useSetTitle } from '@/hooks';
+import { useAsyncError, useLogIn, useSetTitle } from '@/hooks';
 import { getFeatures, getRegisteredItemIDs } from '@/services';
+import { ENTITY_ASSOCIATION_NAME } from '@/constants';
 import { Item as ItemType, Payload, TicketData } from '@/types';
 
 function HomePage() {
@@ -17,6 +18,7 @@ function HomePage() {
     const [selectedItemIDs, setSelectedItemIDs] = useState<ItemType['id'][]>([]);
     const navigate = useNavigate();
     const { logOut } = useLogIn();
+    const { asyncErrorHandler } = useAsyncError();
 
     useSetTitle('Productboard');
 
@@ -42,6 +44,7 @@ function HomePage() {
     });
 
     useDeskproAppEvents({
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         onElementEvent(_: string, __: string, payload: Payload) {
             switch (payload.type) {
@@ -62,12 +65,13 @@ function HomePage() {
         getFeatures({ client })
             .then(features => {
                 features && setItems(features);
-            });
+            })
+            .catch(asyncErrorHandler);
 
         getRegisteredItemIDs({ client, ticketID })
             .then(setLinkedItemIDs)
             .catch(() => {setLinkedItemIDs([])});
-    }, [client, ticketID]);
+    }, [client, ticketID, asyncErrorHandler]);
 
     useEffect(() => {
         setLinkedItems(items.filter(item => linkedItemIDs.includes(item.id)));
@@ -76,7 +80,7 @@ function HomePage() {
     useInitialisedDeskproAppClient(client => {
         if (!ticketID) return;
 
-        client.getEntityAssociation('linkedProductboardItems', ticketID)
+        client.getEntityAssociation(ENTITY_ASSOCIATION_NAME, ticketID)
             .list()
             .then(itemIDs => {client.setBadgeCount(itemIDs.length)})
             .catch(() => client.setBadgeCount(0));

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { LoadingSpinner, useDeskproAppClient, useDeskproAppEvents, useDeskproElements } from '@deskpro/app-sdk';
 import { Container, Logo, StatusBadge, TextBlockWithLabel, Title } from '@/components';
-import { useSetTitle, useUnlinkItem } from '@/hooks';
+import { useAsyncError, useSetTitle, useUnlinkItem } from '@/hooks';
 import { getFeature } from '@/services';
 import { Item, Payload } from '@/types';
 
@@ -12,6 +12,7 @@ function ItemPage() {
     const { id } = useParams();
     const [item, setItem] = useState<Item>();
     const { unlink, isLoading } = useUnlinkItem();
+    const { asyncErrorHandler } = useAsyncError();
 
     useSetTitle('Productboard');
 
@@ -40,6 +41,7 @@ function ItemPage() {
     });
 
     useDeskproAppEvents({
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         onElementEvent(_: string, __: string, payload: Payload) {
             switch (payload.type) {
@@ -49,7 +51,7 @@ function ItemPage() {
                     break;
 
                 case 'unlinkItem':
-                    item && unlink(item);
+                    item && void unlink(item);
                     
                     break;
             };
@@ -60,8 +62,11 @@ function ItemPage() {
         if (!client || !id) return;
 
         getFeature({ id, client })
-            .then(setItem)
-    }, [client, id]);
+            .then(feature => {
+                feature && setItem(feature);
+            })
+            .catch(asyncErrorHandler)
+    }, [client, id, asyncErrorHandler]);
 
     if (!item?.id) return;
 

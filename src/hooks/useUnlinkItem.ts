@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDeskproAppClient, useDeskproLatestAppContext } from '@deskpro/app-sdk';
 import { useAsyncError } from '@/hooks';
+import { ENTITY_ASSOCIATION_NAME } from '@/constants';
 import { Item, TicketData } from '@/types';
 
 function useUnlinkItem() {
@@ -18,14 +19,14 @@ function useUnlinkItem() {
         setIsLoading(true);
 
         return client
-            .getEntityAssociation('linkedProductboardItems', ticketID)
+            .getEntityAssociation(ENTITY_ASSOCIATION_NAME, ticketID)
             .delete(item.id)
             .catch(asyncErrorHandler)
             .finally(() => {
                 setIsLoading(false);
                 navigate('/home');
             });
-    }, [client, ticketID]);
+    }, [client, ticketID, asyncErrorHandler, navigate]);
 
     return {
         unlink,

@@ -35,7 +35,7 @@ interface GetFeatures {
 
 async function getFeatures({ client }: GetFeatures): Promise<Feature[] | undefined> {
     try {
-        let features: Feature[][] = [];
+        const features: Feature[][] = [];
         let nextPage: string | null = '/features';
 
         while (nextPage) {
@@ -69,9 +69,7 @@ async function getFeatures({ client }: GetFeatures): Promise<Feature[] | undefin
         };
 
         return features.flat();
-    } catch (error: any) {
-        console.log('error getting features:', error);
-
+    } catch (error: unknown) {
         return undefined;
     };
 };

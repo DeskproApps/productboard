@@ -4,7 +4,8 @@ import { useDeskproAppClient, useDeskproAppEvents, useDeskproElements, useDeskpr
 import LinkItems from './LinkItems';
 import { useAsyncError, useSetTitle } from '@/hooks';
 import { getFeatures, getRegisteredItemIDs } from '@/services';
-import { Item, TicketData } from '@/types';
+import { ENTITY_ASSOCIATION_NAME } from '@/constants';
+import { Item, Payload, TicketData } from '@/types';
 
 function LinkItemsPage() {
     const { client } = useDeskproAppClient();
@@ -40,6 +41,7 @@ function LinkItemsPage() {
     });
 
     useDeskproAppEvents({
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         onElementEvent(_: string, __: string, payload: Payload) {
             switch (payload.type) {
@@ -57,8 +59,9 @@ function LinkItemsPage() {
         getFeatures({ client })
             .then(features => {
                 features && setItems(features);
-            });
-    }, [client]);
+            })
+            .catch(asyncErrorHandler);
+    }, [client, asyncErrorHandler]);
 
     useEffect(() => {
         if (!client || !ticketID) return;
@@ -71,7 +74,7 @@ function LinkItemsPage() {
     useInitialisedDeskproAppClient(client => {
         if (!ticketID) return;
 
-        client.getEntityAssociation('linkedProductboardItems', ticketID)
+        client.getEntityAssociation(ENTITY_ASSOCIATION_NAME, ticketID)
             .list()
             .then(itemIDs => {client.setBadgeCount(itemIDs.length)})
             .catch(() => {client.setBadgeCount(0)});
@@ -96,7 +99,7 @@ function LinkItemsPage() {
 
         Promise.all([
             ...selectedItemIDs.map(ID => client
-                .getEntityAssociation('linkedProductboardItems', ticketID)
+                .getEntityAssociation(ENTITY_ASSOCIATION_NAME, ticketID)
                 .set(ID)
             )
         ])

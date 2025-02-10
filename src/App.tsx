@@ -18,7 +18,7 @@ function App() {
 
     useEffect(() => {
         if (state.isAuth) navigate('/home');
-    }, [state.isAuth]);
+    }, [state.isAuth, navigate]);
 
     const handleElementEvent = (_: string, __: string, payload: Payload) => {
         switch (payload.type) {

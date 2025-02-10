@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDeskproAppClient } from '@deskpro/app-sdk';
 import { Link, Logo, OverflowText, StatusBadge, TextBlockWithLabel, Title, TwoSider } from '@/components';
+import { useAsyncError } from '@/hooks';
 import { getLinkedDeskproEntitiesCount, getProduct } from '@/services';
 import { Item, Parent, Product } from '@/types';
 
@@ -14,13 +15,15 @@ function Info({ item }: Info) {
     const [parent, setParent] = useState<Product>();
     const [linkedTicketsCount, setLinkedTicketsCount] = useState(0);
     const navigate = useNavigate();
+    const { asyncErrorHandler } = useAsyncError();
 
     useEffect(() => {
         if (!client) return;
 
         getLinkedDeskproEntitiesCount({ client, id: item.id })
-            .then(setLinkedTicketsCount);
-    }, [client]);
+            .then(setLinkedTicketsCount)
+            .catch(asyncErrorHandler);
+    }, [client, item.id, asyncErrorHandler]);
     
     const ItemTitle = () => (
         <Link
@@ -47,10 +50,11 @@ function Info({ item }: Info) {
                 })
                     .then(parent => {
                         parent && setParent(parent);
-                    });
+                    })
+                    .catch(asyncErrorHandler);
             };
         };
-    }, [client, item.parent]);
+    }, [client, item.parent, asyncErrorHandler]);
 
     const ParentLink = () => (
         <OverflowText>

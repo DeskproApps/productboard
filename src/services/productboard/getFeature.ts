@@ -48,9 +48,7 @@ async function getFeature({ id, client }: GetFeature): Promise<Feature | undefin
             timeframe: getTimeframe(feature.timeframe),
             parent: feature.parent
         };
-    } catch (error: any) {
-        console.log('error getting feature:', error);
-
+    } catch (error: unknown) {
         return undefined;
     };
 };

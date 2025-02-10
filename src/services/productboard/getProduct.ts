@@ -33,9 +33,7 @@ async function getProduct({ id, client }: GetProduct): Promise<Product | undefin
             name: product.name,
             link: product.links.html
         };
-    } catch (error: any) {
-        console.log('error getting product:', error);
-
+    } catch (error: unknown) {
         return undefined;
     };
 };

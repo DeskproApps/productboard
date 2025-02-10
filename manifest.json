@@ -39,7 +39,7 @@
         }
     },
     "entityAssociations": {
-        "linkedProductboardItems": {
+        "linked_productboard_items": {
             "entity": "ticket",
             "type": "external_id",
             "title": "Linked Productboard Items"

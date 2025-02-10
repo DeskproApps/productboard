@@ -24,7 +24,8 @@ function useLogIn() {
         client
             .oauth2()
             .getGenericCallbackUrl(key, /code=(?<token>.+?)&/, /state=(?<key>[^&]+)/)
-            .then(setCallback);
+            .then(setCallback)
+            .catch(asyncErrorHandler);
     }, [setCallback]);
 
     useEffect(() => {
@@ -70,7 +71,7 @@ function useLogIn() {
             .finally(() => {
                 setIsLoading(false);
             });
-    }, [callback?.poll, client, context, callback?.callbackUrl]);
+    }, [callback, client, context, dispatch, navigate, asyncErrorHandler]);
 
     const logOut = () => {
         if (!client) return;
