@@ -8,14 +8,14 @@ interface Items {
     onItemSelectionChange: (item: ItemType) => void;
 };
 
-function Items({
-    items,
-    selectedItemIDs,
-    onItemSelectionChange
-}: Items) {
-    if (!Array.isArray(items)) return <NoFound />
+function Items({ items, selectedItemIDs, onItemSelectionChange }: Items) {
+    if (!Array.isArray(items)) {
+        return <NoFound />
+    };
     
-    if (items.length === 0) return <NoFound text='No Productboard Items Found' />
+    if (items.length === 0) {
+        return <NoFound text='No Productboard Items Found' />
+    };
 
     return (
         <>
