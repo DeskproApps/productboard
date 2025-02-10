@@ -1,4 +1,5 @@
 import { IDeskproClient, proxyFetch } from '@deskpro/app-sdk';
+import { BASE_REQUEST_BASE_API_URL, USER_BASE_REQUEST_BEARER_TOKEN_PATH } from '@/constants';
 
 interface BaseRequest {
     client: IDeskproClient;
@@ -21,7 +22,7 @@ const baseRequest: BaseRequestType = async ({
 
     // URL
     
-    const baseURL = 'https://api.productboard.com';
+    const baseURL = BASE_REQUEST_BASE_API_URL;
     let requestURL = `${baseURL}${endpoint}`;
 
     if (queryParameters.size > 0) requestURL += `?${queryParameters}`;
@@ -30,7 +31,7 @@ const baseRequest: BaseRequestType = async ({
 
     const headers: Record<string, string> = {};
 
-    headers['authorization'] = 'Bearer [user[oauth2/access_token]]';
+    headers['authorization'] = `Bearer ${USER_BASE_REQUEST_BEARER_TOKEN_PATH}`;
     headers['x-version'] = '1';
 
     // body

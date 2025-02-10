@@ -1,4 +1,5 @@
 import { Context, IDeskproClient, proxyFetch } from '@deskpro/app-sdk';
+import { BASE_REQUEST_BASE_APP_URL } from '@/constants';
 import { Settings } from '@/types';
 
 interface GetAccessAndRefreshTokens {
@@ -23,7 +24,7 @@ async function getAccessAndRefreshTokens({ token, client, context, redirectURI }
             redirect_uri: redirectURI,
             code: token
         });
-        const response = await fetch(`https://app.productboard.com/oauth2/token?${queryParameters}`, {
+        const response = await fetch(`${BASE_REQUEST_BASE_APP_URL}/oauth2/token?${queryParameters}`, {
             method: 'POST'
         });
         const data = await response.json();

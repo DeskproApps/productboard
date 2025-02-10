@@ -1,4 +1,5 @@
 import { IDeskproClient } from '@deskpro/app-sdk';
+import { ENTITY_ASSOCIATION_NAME } from '@/constants';
 
 interface GetRegisteredItemIDs {
     client: IDeskproClient;
@@ -8,7 +9,7 @@ interface GetRegisteredItemIDs {
 async function getRegisteredItemIDs({ client, ticketID }: GetRegisteredItemIDs) {
     if (!client || !ticketID) return [];
 
-    const linkedIDs = await client.getEntityAssociation('linkedProductboardItems', ticketID).list();
+    const linkedIDs = await client.getEntityAssociation(ENTITY_ASSOCIATION_NAME, ticketID).list();
 
     return linkedIDs;
 };

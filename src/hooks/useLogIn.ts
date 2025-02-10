@@ -5,6 +5,7 @@ import { v4 as uuid } from 'uuid';
 import { useStore } from '@/context/Store';
 import { useAsyncError } from '@/hooks';
 import { deleteAccessToken, deleteRefreshToken, getAccessAndRefreshTokens, setAccessToken, setRefreshToken } from '@/services';
+import { BASE_REQUEST_BASE_APP_URL } from '@/constants';
 import { Settings } from '@/types';
 
 function useLogIn() {
@@ -28,7 +29,7 @@ function useLogIn() {
 
     useEffect(() => {
         if (callback?.callbackUrl && clientID && key) {
-            const baseURL = 'https://app.productboard.com/oauth2/authorize';
+            const baseURL = `${BASE_REQUEST_BASE_APP_URL}/oauth2/authorize`;
             const queryParameters = new URLSearchParams({
                 client_id: clientID,
                 response_type: 'code',
