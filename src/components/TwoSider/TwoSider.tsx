@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { TextBlockWithLabel  } from '@/components';
-import { ITextBlockWithLabel } from '../TextBlockWithLabel/TextBlockWithLabel';
+import { DeskproTheme } from '@deskpro/deskpro-ui';
+import { ITextBlockWithLabel, TextBlockWithLabel  } from '@/components';
 
 const Container = styled.div`
     margin-bottom: -1px;
@@ -16,7 +16,7 @@ const Divider = styled.div`
     width: 1px;
     height: 2em;
     margin: 0 6px;
-    background-color: ${({ theme }) => theme.colors.grey20};
+    background-color: ${({ theme }) => (theme as DeskproTheme).colors.grey20};
 `;
 
 interface TwoSider {

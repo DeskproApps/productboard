@@ -1,13 +1,13 @@
 import { useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { CopyToClipboardInput, LoadingSpinner, useInitialisedDeskproAppClient } from '@deskpro/app-sdk';
-import { P1 } from '@deskpro/deskpro-ui';
+import { DeskproTheme, P1 } from '@deskpro/deskpro-ui';
 import { v4 as uuid } from 'uuid';
 import { useAsyncError } from '@/hooks';
 
 const Description = styled(P1)`
     margin-top: 8px;
-    color: ${({ theme }) => theme.colors.grey80};
+    color: ${({ theme }) => (theme as DeskproTheme).colors.grey80};
 `;
 
 function AdminCallbackPage() {
