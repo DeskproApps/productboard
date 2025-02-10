@@ -13,9 +13,7 @@ interface Title {
     onClick?: () => void;
 };
 
-const Heading = styled(H1)`
-    // width: calc(100% - 50px);
-`;
+const Heading = styled(H1)``;
 
 function Title({
     title,
