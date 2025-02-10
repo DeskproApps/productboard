@@ -1,12 +1,12 @@
 import { IDeskproClient } from '@deskpro/app-sdk';
 
 interface GetLinkedDeskproEntitiesCount {
-    ID: string;
+    id: string;
     client: IDeskproClient;
 };
 
-async function getLinkedDeskproEntitiesCount({ ID, client }: GetLinkedDeskproEntitiesCount) {
-    return await client.entityAssociationCountEntities('linkedProductboardItems', ID);
+async function getLinkedDeskproEntitiesCount({ id, client }: GetLinkedDeskproEntitiesCount) {
+    return await client.entityAssociationCountEntities('linkedProductboardItems', id);
 };
 
 export default getLinkedDeskproEntitiesCount;

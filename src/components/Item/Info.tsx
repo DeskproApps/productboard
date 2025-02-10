@@ -18,7 +18,7 @@ function Info({ item }: Info) {
     useEffect(() => {
         if (!client) return;
 
-        getLinkedDeskproEntitiesCount({ client, ID: item.id })
+        getLinkedDeskproEntitiesCount({ client, id: item.id })
             .then(setLinkedTicketsCount);
     }, [client]);
     
