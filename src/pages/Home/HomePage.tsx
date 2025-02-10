@@ -3,10 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { HorizontalDivider, useDeskproAppClient, useDeskproAppEvents, useDeskproElements, useDeskproLatestAppContext, useInitialisedDeskproAppClient } from '@deskpro/app-sdk';
 import { P1 } from '@deskpro/deskpro-ui';
 import { Container, Item } from '@/components';
-import { useSetTitle } from '@/hooks';
+import { useLogIn, useSetTitle } from '@/hooks';
 import { getFeatures, getRegisteredItemIDs } from '@/services';
 import { Item as ItemType, Payload, TicketData } from '@/types';
-import { useLogIn } from '../LogIn/useLogIn';
 
 function HomePage() {
     const { client } = useDeskproAppClient();

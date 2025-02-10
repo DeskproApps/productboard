@@ -2,15 +2,15 @@ import { useEffect, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { LoadingSpinner, useDeskproAppEvents, useDeskproElements } from '@deskpro/app-sdk';
 import { AdminCallbackPage, CreateItemPage, HomePage, InitialPage, ItemPage, LinkItemsPage, LogInPage,  } from '@/pages';
-import { useStore } from './context/Store';
-import { useLogIn } from './pages/LogIn/useLogIn';
-import { Payload } from './types';
+import { useStore } from '@/context/Store';
+import { useLogIn } from '@/hooks';
+import { Payload } from '@/types';
 
 function App() {
     const [state] = useStore();
     const navigate = useNavigate();
     const { logOut } = useLogIn();
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading] = useState(false);
 
     useDeskproElements(({ registerElement }) => {
         registerElement('refresh', {type: 'refresh_button'});
@@ -46,7 +46,6 @@ function App() {
             <Route path='/link_items' element={<LinkItemsPage />} />
             <Route path='/create_item' element={<CreateItemPage />} />
             <Route path='/item/:id' element={<ItemPage />} />
-            {/* <Route path="*" element={<NotFoundPage />} /> */}
         </Routes>
     );
 };

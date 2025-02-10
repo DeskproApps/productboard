@@ -7,7 +7,7 @@ import { useAsyncError } from '@/hooks';
 import { deleteAccessToken, deleteRefreshToken, getAccessAndRefreshTokens, setAccessToken, setRefreshToken } from '@/services';
 import { Settings } from '@/types';
 
-export function useLogIn() {
+function useLogIn() {
     const { client } = useDeskproAppClient();
     const { context } = useDeskproLatestAppContext<unknown, Settings>();
     const clientID = context?.settings.client_id;
@@ -101,3 +101,5 @@ export function useLogIn() {
         logOut
     };
 };
+
+export default useLogIn;

@@ -1,5 +1,5 @@
 import LogIn from './LogIn';
-import { useLogIn } from './useLogIn';
+import { useLogIn } from '@/hooks';
 
 function LogInPage() {
     const { authURL, isLoading, poll } = useLogIn();
