@@ -1,7 +1,7 @@
 {
     "name": "@deskpro-apps/productboard",
-    "title": "ProductBoard",
-    "description": "App for ProductBoard",
+    "title": "Productboard",
+    "description": "Manage your features in Productboard and seamlessly link them to tickets.",
     "version": "0.0.20",
     "scope": "agent",
     "isSingleInstall": false,

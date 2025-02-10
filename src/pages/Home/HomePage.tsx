@@ -18,7 +18,7 @@ function HomePage() {
     const navigate = useNavigate();
     const { logOut } = useLogIn();
 
-    useSetTitle('ProductBoard');
+    useSetTitle('Productboard');
 
     useDeskproElements(({ clearElements, registerElement }) => {
         clearElements();
@@ -60,7 +60,9 @@ function HomePage() {
         if (!client || !ticketID) return;
 
         getFeatures({ client })
-            .then(setItems);
+            .then(features => {
+                features && setItems(features);
+            });
 
         getRegisteredItemIDs({ client, ticketID })
             .then(setLinkedItemIDs)

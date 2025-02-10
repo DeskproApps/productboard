@@ -15,7 +15,7 @@ function Items({
 }: Items) {
     if (!Array.isArray(items)) return <NoFound />
     
-    if (items.length === 0) return <NoFound text='No ProductBoard Items Found' />
+    if (items.length === 0) return <NoFound text='No Productboard Items Found' />
 
     return (
         <>

@@ -11,7 +11,7 @@ interface LogIn {
 function LogIn({ authURL, isLoading, onLogIn }: LogIn) {
     return (
         <Container>
-            <Title title='Log into ProductBoard' />
+            <Title title='Log into Productboard' />
             <AnchorButton
                 text='Log In'
                 target='_blank'
