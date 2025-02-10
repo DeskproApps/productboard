@@ -1,7 +1,7 @@
 import { IDeskproClient } from '@deskpro/app-sdk';
 import baseRequest from './baseRequest';
 import { getTimeframe } from './utilities/timeframe';
-import { Feature, Parent, TimeframeObject } from '@/types';
+import { Feature, ParentObject, TimeframeObject } from '@/types';
 
 type GetFeaturesResponse = {
     data: {
@@ -18,11 +18,7 @@ type GetFeaturesResponse = {
             name: string;
         };
         timeframe: TimeframeObject;
-        parent: {
-            [key in Parent]: {
-                id: string;
-            };
-        };
+        parent: ParentObject;
     }[];
     links: {
         next: string | null;
@@ -59,12 +55,11 @@ async function getFeatures({ client }: GetFeatures): Promise<Feature[] | undefin
 
             const nextLink = response.links?.next;
 
+            nextPage = null;
             if (nextLink) {
                 const next = new URL(nextLink);
 
                 nextPage = next.pathname + next.search;
-            } else {
-                nextPage = null;
             };
         };
 

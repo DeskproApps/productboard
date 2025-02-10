@@ -54,13 +54,13 @@ const baseRequest: BaseRequestType = async ({
         const errorResponse = await response.json();
 
         throw new Error(`ProductBoard API Error: ${JSON.stringify(errorResponse)}`);
-    } else {
-        try {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-            return await response.json();
-        } catch (error) {
-            return undefined;
-        };
+    };
+
+    try {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        return await response.json();
+    } catch (error) {
+        return undefined;
     };
 };
 
