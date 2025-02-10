@@ -6,6 +6,7 @@ import { Container, Item } from '@/components';
 import { useSetTitle } from '@/hooks';
 import { getFeatures, getRegisteredItemIDs } from '@/services';
 import { Item as ItemType, Payload, TicketData } from '@/types';
+import { useLogIn } from '../LogIn/useLogIn';
 
 function HomePage() {
     const { client } = useDeskproAppClient();
@@ -16,6 +17,7 @@ function HomePage() {
     const [linkedItemIDs, setLinkedItemIDs] = useState<ItemType['id'][]>([]);
     const [selectedItemIDs, setSelectedItemIDs] = useState<ItemType['id'][]>([]);
     const navigate = useNavigate();
+    const { logOut } = useLogIn();
 
     useSetTitle('ProductBoard');
 
@@ -48,9 +50,12 @@ function HomePage() {
                     navigate(payload.path);
 
                     break;
+
+                case 'logOut':
+                    logOut();
             };
         }
-    });
+    }, [navigate, logOut]);
 
     useEffect(() => {
         if (!client || !ticketID) return;
