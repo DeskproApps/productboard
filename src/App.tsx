@@ -35,7 +35,9 @@ function App() {
         onElementEvent: handleElementEvent
     });
 
-    if (isLoading) return <LoadingSpinner />
+    if (isLoading) {
+        return <LoadingSpinner />
+    };
 
     return (
         <Routes>

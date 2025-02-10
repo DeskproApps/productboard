@@ -22,7 +22,9 @@ function AdminCallbackPage() {
             .catch(asyncErrorHandler);
     }, [key]);
 
-    if (!callbackURL) return <LoadingSpinner />;
+    if (!callbackURL) {
+        return <LoadingSpinner />
+    };
 
     return (
         <>
