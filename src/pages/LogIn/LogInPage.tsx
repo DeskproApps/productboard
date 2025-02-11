@@ -1,10 +1,24 @@
-import LogIn from './LogIn';
+import { Title } from '@deskpro/app-sdk';
+import { AnchorButton } from '@deskpro/deskpro-ui';
+import { Container } from '@/components';
 import { useLogIn } from '@/hooks';
 
 function LogInPage() {
     const { authURL, isLoading, poll } = useLogIn();
 
-    return <LogIn authURL={authURL} isLoading={isLoading} onLogIn={poll} />
+    return (
+        <Container>
+            <Title title='Log into Productboard' />
+            <AnchorButton
+                text='Log In'
+                target='_blank'
+                href={authURL ?? '#'}
+                loading={!authURL || isLoading}
+                disabled={!authURL || isLoading}
+                onClick={poll}
+            />
+        </Container>
+    );
 };
 
 export default LogInPage;
