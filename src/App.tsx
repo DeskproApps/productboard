@@ -18,6 +18,7 @@ function App() {
 
     useEffect(() => {
         if (state.isAuth) navigate('/home');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.isAuth]);
 
     const handleElementEvent = (_: string, __: string, payload: Payload) => {
