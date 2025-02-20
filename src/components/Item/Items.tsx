@@ -1,4 +1,4 @@
-import { NoFound } from '@/components';
+import { NotFound } from '@/components';
 import Item from './Item';
 import { Item as ItemType } from '@/types';
 
@@ -10,11 +10,11 @@ interface Items {
 
 function Items({ items, selectedItemIDs, onItemSelectionChange }: Items) {
     if (!Array.isArray(items)) {
-        return <NoFound />
+        return <NotFound />
     };
     
     if (items.length === 0) {
-        return <NoFound text='No Productboard Items Found' />
+        return <NotFound text='No Productboard Items Found' />
     };
 
     return (

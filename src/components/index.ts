@@ -6,7 +6,7 @@ export { default as Item } from './Item/Item';
 export { default as Items } from './Item/Items';
 export { default as Link } from './Link/Link';
 export { default as Logo } from './Logo/Logo';
-export { default as NoFound } from './NoFound/NoFound';
+export { default as NotFound } from './NotFound/NotFound';
 export { default as TwoSider } from './TwoSider/TwoSider';
 export { default as TextBlockWithLabel } from './TextBlockWithLabel/TextBlockWithLabel';
 export type { ITextBlockWithLabel } from './TextBlockWithLabel/TextBlockWithLabel';
