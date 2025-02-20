@@ -6,6 +6,12 @@ import { useAsyncError } from '@/hooks';
 import { getLinkedDeskproEntitiesCount, getProduct } from '@/services';
 import { Item, Parent, Product } from '@/types';
 
+const Status = ({ item }: {item: Item}) => (
+    <OverflowText>
+        <StatusBadge text={item.status} />
+    </OverflowText>
+);
+
 interface Info {
     item: Item;
 };
@@ -57,12 +63,6 @@ function Info({ item }: Info) {
         </OverflowText>
     );
 
-    const Status = () => (
-        <OverflowText>
-            <StatusBadge text={item.status} />
-        </OverflowText>
-    );
-
     return (
         <>
             <Title
@@ -84,7 +84,7 @@ function Info({ item }: Info) {
             />
             <TextBlockWithLabel
                 label='Status'
-                text={<Status />}
+                text={<Status item={item} />}
             />
         </>
     );
