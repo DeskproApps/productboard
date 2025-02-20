@@ -53,23 +53,21 @@ function LinkItemsPage() {
         }
     });
 
-    useEffect(() => {
-        if (!client) return;
-
+    useInitialisedDeskproAppClient(client => {
         getFeatures({ client })
             .then(features => {
                 features && setItems(features);
             })
             .catch(asyncErrorHandler);
-    }, [client, asyncErrorHandler]);
+    }, [asyncErrorHandler]);
 
-    useEffect(() => {
-        if (!client || !ticketID) return;
+    useInitialisedDeskproAppClient(client => {
+        if (!ticketID) return;
 
         getRegisteredItemIDs({ client, ticketID })
             .then(setSelectedItemIDs)
             .catch(() => {setSelectedItemIDs([])});
-    }, [client, ticketID])
+    }, [ticketID])
 
     useInitialisedDeskproAppClient(client => {
         if (!ticketID) return;

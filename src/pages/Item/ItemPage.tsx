@@ -1,13 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { LoadingSpinner, useDeskproAppClient, useDeskproAppEvents, useDeskproElements } from '@deskpro/app-sdk';
+import { LoadingSpinner, useDeskproAppEvents, useDeskproElements, useInitialisedDeskproAppClient } from '@deskpro/app-sdk';
 import { Container, Logo, StatusBadge, TextBlockWithLabel, Title } from '@/components';
 import { useAsyncError, useSetTitle, useUnlinkItem } from '@/hooks';
 import { getFeature } from '@/services';
 import { Item, Payload } from '@/types';
 
 function ItemPage() {
-    const { client } = useDeskproAppClient();
     const navigate = useNavigate();
     const { id } = useParams();
     const [item, setItem] = useState<Item>();
@@ -58,15 +57,15 @@ function ItemPage() {
         }
     }, [navigate, item]);
 
-    useEffect(() => {
-        if (!client || !id) return;
+    useInitialisedDeskproAppClient(client => {
+        if (!id) return;
 
         getFeature({ id, client })
             .then(feature => {
                 feature && setItem(feature);
             })
             .catch(asyncErrorHandler)
-    }, [client, id, asyncErrorHandler]);
+    }, [id, asyncErrorHandler]);
 
     if (!item?.id) return;
 
