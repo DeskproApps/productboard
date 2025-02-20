@@ -38,8 +38,9 @@ const baseRequest: BaseRequestType = async ({
 
     let body = undefined;
 
-    if (data instanceof FormData) body = data;
-    else if (data) {
+    if (data instanceof FormData) {
+        body = data;
+    } else if (data) {
         headers['content-type'] = 'application/json';
         headers['accept'] = 'application/json';
         body = JSON.stringify(data);
