@@ -21,9 +21,15 @@ const statuses = {
         text: 'Released',
         colour: '#79CE17'
     }
+} as const;
+
+const defaultColour = '#B0B0B0';
+
+interface Badge {
+    colour: typeof statuses[keyof typeof statuses]['colour'] | typeof defaultColour;
 };
 
-const Badge = styled.span<{ colour: string }>`
+const Badge = styled.span<Badge>`
     display: inline-block;
     padding: 2px 8px;
     font-size: 9px;
@@ -40,7 +46,7 @@ function StatusBadge({ text }: StatusBadge) {
     const matchingStatus = Object.values(statuses).find(status => status.text === text);
     const { text: statusText, colour } = matchingStatus || {
         text,
-        colour: '#B0B0B0'
+        colour: defaultColour
     };
 
     return <Badge colour={colour}>{statusText}</Badge>
