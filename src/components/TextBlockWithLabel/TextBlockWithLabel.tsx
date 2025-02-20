@@ -30,7 +30,7 @@ function sanitiseHTML(text: string | number | ReactElement) {
 
     const links = tempDiv.querySelectorAll('a');
     links.forEach(link => {
-        link.setAttribute('target', '_blank');
+        link.target = '_blank';
     });
 
     return tempDiv.innerHTML;
@@ -43,9 +43,11 @@ function TextBlockWithLabel({ marginBottom = 10, label, text, isHTML }: ITextBlo
         const sanitisedHTML = sanitiseHTML(text);
 
         textBlock = <HTMLContent dangerouslySetInnerHTML={{__html: sanitisedHTML}} />
-    }
-    else if (typeof text === 'string' || typeof text === 'number') textBlock = <P5>{text}</P5>;
-    else if (isValidElement(text)) textBlock = <Stack gap={5} align='baseline'>{text}</Stack>;
+    } else if (typeof text === 'string' || typeof text === 'number'){
+        textBlock = <P5>{text}</P5>
+    } else if (isValidElement(text)) {
+        textBlock = <Stack gap={5} align='baseline'>{text}</Stack>
+    };
     
     return (
         <Container marginBottom={marginBottom}>

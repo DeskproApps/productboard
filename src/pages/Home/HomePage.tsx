@@ -59,8 +59,8 @@ function HomePage() {
         }
     }, [navigate, logOut]);
 
-    useEffect(() => {
-        if (!client || !ticketID) return;
+    useInitialisedDeskproAppClient(client => {
+        if (!ticketID) return;
 
         getFeatures({ client })
             .then(features => {
@@ -71,7 +71,7 @@ function HomePage() {
         getRegisteredItemIDs({ client, ticketID })
             .then(setLinkedItemIDs)
             .catch(() => {setLinkedItemIDs([])});
-    }, [client, ticketID, asyncErrorHandler]);
+    }, [ticketID, asyncErrorHandler]);
 
     useEffect(() => {
         setLinkedItems(items.filter(item => linkedItemIDs.includes(item.id)));

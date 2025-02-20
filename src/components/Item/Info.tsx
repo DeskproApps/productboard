@@ -46,10 +46,7 @@ function Info({ item }: Info) {
         const parentType = Object.keys(item.parent)[0] as Parent;
 
         if (parentType === 'product') {
-            getProduct({
-                id: item.parent.product.id,
-                client
-            })
+            getProduct({ id: item.parent.product.id, client })
                 .then(parent => {
                     parent && setParent(parent);
                 })

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { LoadingSpinner, useDeskproAppEvents, useDeskproElements } from '@deskpro/app-sdk';
-import { AdminCallbackPage, CreateItemPage, HomePage, InitialPage, ItemPage, LinkItemsPage, LogInPage,  } from '@/pages';
+import { AdminCallbackPage, CreateItemPage, HomePage, InitialPage, ItemPage, LinkItemsPage, LogInPage } from '@/pages';
 import { useStore } from '@/context/Store';
 import { useLogIn } from '@/hooks';
 import { Payload } from '@/types';
@@ -21,19 +21,17 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.isAuth]);
 
-    const handleElementEvent = (_: string, __: string, payload: Payload) => {
-        switch (payload.type) {
-            case 'logOut':
-                logOut();
-
-                break;
-        };
-    };
-
     useDeskproAppEvents({
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        onElementEvent: handleElementEvent
+        onElementEvent: (_: string, __: string, payload: Payload) => {
+            switch (payload.type) {
+                case 'logOut':
+                    logOut();
+    
+                    break;
+            };
+        }
     });
 
     if (isLoading) {
