@@ -56,6 +56,7 @@ async function getFeatures({ client }: GetFeatures): Promise<Feature[] | undefin
             const nextLink = response.links?.next;
 
             nextPage = null;
+
             if (nextLink) {
                 const next = new URL(nextLink);
 
