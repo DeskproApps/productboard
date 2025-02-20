@@ -12,7 +12,6 @@ Input all the required fields.
 For the Redirect URI, copy the Callback URL from the Productboard settings tab in this admin drawer in Deskpro, then paste it in.
 
 For the scopes, check:
-- plugin_integrations:manage
 - product_hierarchy_data:read
 
 Then click "Create Application".
