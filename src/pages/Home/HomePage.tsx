@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { HorizontalDivider, useDeskproAppClient, useDeskproAppEvents, useDeskproElements, useDeskproLatestAppContext, useInitialisedDeskproAppClient } from '@deskpro/app-sdk';
+import { HorizontalDivider, useDeskproAppEvents, useDeskproElements, useDeskproLatestAppContext, useInitialisedDeskproAppClient } from '@deskpro/app-sdk';
 import { P1 } from '@deskpro/deskpro-ui';
 import { Container, Item } from '@/components';
 import { useAsyncError, useLogIn, useSetTitle } from '@/hooks';
@@ -9,7 +9,6 @@ import { ENTITY_ASSOCIATION_NAME } from '@/constants';
 import { Item as ItemType, Payload, TicketData } from '@/types';
 
 function HomePage() {
-    const { client } = useDeskproAppClient();
     const { context } = useDeskproLatestAppContext<TicketData, unknown>();
     const ticketID = context?.data?.ticket.id;
     const [items, setItems] = useState<ItemType[]>([]);
