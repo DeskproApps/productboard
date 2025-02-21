@@ -1,8 +1,8 @@
 import { IDeskproClient } from '@deskpro/app-sdk';
-import getFeatures from './getFeatures';
+import baseRequest from './baseRequest';
 
 function checkIsAuth(client: IDeskproClient) {
-    return getFeatures({ client })
+    return baseRequest({ client, endpoint: '/jira-integrations' }) // endpoint used to check authentication, until a specific endpoint is created
         .then(() => Promise.resolve(true))
         .catch(() => Promise.resolve(false));
 };

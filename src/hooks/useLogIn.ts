@@ -75,7 +75,11 @@ function useLogIn() {
                 });
                 navigate('/home');
             })
-            .catch(asyncErrorHandler)
+            .catch(error => {
+                logOut();
+
+                asyncErrorHandler(error);
+            })
             .finally(() => {
                 setIsLoading(false);
             });

@@ -15,11 +15,14 @@ function AdminCallbackPage() {
     const key = useMemo(() => uuid(), []);
     const { asyncErrorHandler } = useAsyncError();
 
-    useInitialisedDeskproAppClient(client => {
-        client.oauth2()
-            .getAdminGenericCallbackUrl(key, /code=(?<token>.+?)&/, /state=(?<key>[^&]+)/)
-            .then(({ callbackUrl }) => {setCallbackURL(callbackUrl)})
-            .catch(asyncErrorHandler);
+    useInitialisedDeskproAppClient(async client => {
+        try {
+            const { callbackUrl } = await client.oauth2().getAdminGenericCallbackUrl(key, /code=(?<token>.+?)&/, /state=(?<key>[^&]+)/);
+            
+            setCallbackURL(callbackUrl);
+        } catch (error) {
+            asyncErrorHandler(error instanceof Error ? error : new Error('error getting callback URL'));
+        };
     }, [key]);
 
     if (!callbackURL) {

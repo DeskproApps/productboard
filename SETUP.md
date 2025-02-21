@@ -11,12 +11,14 @@ Input all the required fields.
 
 For the Redirect URI, copy the Callback URL from the Productboard settings tab in this admin drawer in Deskpro, then paste it in.
 
+![Fields](/docs/assets/setup/productboard-app-setup-2.png)
+
 For the scopes, check:
+- members_pii:read
 - product_hierarchy_data:read
 
 Then click "Create Application".
 
-![Fields](/docs/assets/setup/productboard-app-setup-2.png)
 ![Scopes](/docs/assets/setup/productboard-app-setup-3.png)
 
 After that, the page will refresh with the Client ID and Client Secret at the top. Copy them and keep them safe, since the Client Secret won't be shown again.
