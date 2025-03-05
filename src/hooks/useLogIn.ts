@@ -42,6 +42,29 @@ function useLogIn() {
         };
     }, [callback, clientID, key]);
 
+    const logOut = useCallback(() => {
+        if (!client) return;
+
+        setIsLoading(true);
+
+        Promise.all([
+            deleteAccessToken({ client }),
+            deleteRefreshToken({ client })
+        ])
+            .then(() => {
+                dispatch({
+                    type: 'setAuth',
+                    payload: false
+                });
+                client.setBadgeCount(0);
+                navigate('/log_in');
+            })
+            .catch(asyncErrorHandler)
+            .finally(() => {
+                setIsLoading(false);
+            });
+    }, [client, dispatch, navigate, asyncErrorHandler]);
+
     const poll = useCallback(() => {
         if (!callback?.poll || !client || !context) return;
 
@@ -78,35 +101,12 @@ function useLogIn() {
             .catch(error => {
                 logOut();
 
-                asyncErrorHandler(error);
+                asyncErrorHandler(error instanceof Error ? error : new Error('error logging in'));
             })
             .finally(() => {
                 setIsLoading(false);
             });
-    }, [callback, client, context, dispatch, navigate, asyncErrorHandler]);
-
-    const logOut = () => {
-        if (!client) return;
-
-        setIsLoading(true);
-
-        Promise.all([
-            deleteAccessToken({ client }),
-            deleteRefreshToken({ client })
-        ])
-            .then(() => {
-                dispatch({
-                    type: 'setAuth',
-                    payload: false
-                });
-                client.setBadgeCount(0);
-                navigate('/log_in');
-            })
-            .catch(asyncErrorHandler)
-            .finally(() => {
-                setIsLoading(false);
-            });
-    };
+    }, [callback, client, context, dispatch, navigate, asyncErrorHandler, logOut]);
 
     return {
         authURL,

@@ -15,6 +15,7 @@ function AdminCallbackPage() {
     const key = useMemo(() => uuid(), []);
     const { asyncErrorHandler } = useAsyncError();
 
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     useInitialisedDeskproAppClient(async client => {
         try {
             const { callbackUrl } = await client.oauth2().getAdminGenericCallbackUrl(key, /code=(?<token>.+?)&/, /state=(?<key>[^&]+)/);
