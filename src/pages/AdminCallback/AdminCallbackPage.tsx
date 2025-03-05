@@ -1,0 +1,41 @@
+import { useMemo, useState } from 'react';
+import styled from 'styled-components';
+import { CopyToClipboardInput, LoadingSpinner, useInitialisedDeskproAppClient } from '@deskpro/app-sdk';
+import { DeskproTheme, P1 } from '@deskpro/deskpro-ui';
+import { v4 as uuid } from 'uuid';
+import { useAsyncError } from '@/hooks';
+
+const Description = styled(P1)`
+    margin-top: 8px;
+    color: ${({ theme }) => (theme as DeskproTheme).colors.grey80};
+`;
+
+function AdminCallbackPage() {
+    const [callbackURL, setCallbackURL] = useState<string | null>(null);
+    const key = useMemo(() => uuid(), []);
+    const { asyncErrorHandler } = useAsyncError();
+
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    useInitialisedDeskproAppClient(async client => {
+        try {
+            const { callbackUrl } = await client.oauth2().getAdminGenericCallbackUrl(key, /code=(?<token>.+?)&/, /state=(?<key>[^&]+)/);
+            
+            setCallbackURL(callbackUrl);
+        } catch (error) {
+            asyncErrorHandler(error instanceof Error ? error : new Error('error getting callback URL'));
+        };
+    }, [key]);
+
+    if (!callbackURL) {
+        return <LoadingSpinner />
+    };
+
+    return (
+        <>
+            <CopyToClipboardInput value={callbackURL || ''} />
+            <Description>The callback URL origin will be required during Productboard app setup</Description>
+        </>
+    );
+};
+
+export default AdminCallbackPage;
