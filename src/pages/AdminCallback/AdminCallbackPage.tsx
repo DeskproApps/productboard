@@ -1,9 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
+import { createSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { CopyToClipboardInput, LoadingSpinner, useInitialisedDeskproAppClient } from '@deskpro/app-sdk';
 import { DeskproTheme, P1 } from '@deskpro/deskpro-ui';
-import { v4 as uuid } from 'uuid';
-import { useAsyncError } from '@/hooks';
+import { BASE_REQUEST_BASE_APP_URL } from '@/constants';
 
 const Description = styled(P1)`
     margin-top: 8px;
@@ -12,19 +12,27 @@ const Description = styled(P1)`
 
 function AdminCallbackPage() {
     const [callbackURL, setCallbackURL] = useState<string | null>(null);
-    const key = useMemo(() => uuid(), []);
-    const { asyncErrorHandler } = useAsyncError();
 
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    useInitialisedDeskproAppClient(async client => {
-        try {
-            const { callbackUrl } = await client.oauth2().getAdminGenericCallbackUrl(key, /code=(?<token>.+?)&/, /state=(?<key>[^&]+)/);
-            
-            setCallbackURL(callbackUrl);
-        } catch (error) {
-            asyncErrorHandler(error instanceof Error ? error : new Error('error getting callback URL'));
-        };
-    }, [key]);
+    useInitialisedDeskproAppClient(client => {
+        client.startOauth2Local(
+            ({ callbackUrl, state }) => {
+                setCallbackURL(callbackUrl);
+
+                return `${BASE_REQUEST_BASE_APP_URL}/oauth2/authorize?${createSearchParams([
+                    ['client_id', 'clientID'],
+                    ['state', state],
+                    ['response_type', 'code'],
+                    ['redirect_uri', callbackUrl]
+                ])}`;
+            },
+            /^$/,
+            async () => ({data: {access_token: ''}}),
+            {
+                pollInterval: 10000,
+                timeout: 600
+            }
+        );
+    }, []);
 
     if (!callbackURL) {
         return <LoadingSpinner />

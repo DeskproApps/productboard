@@ -9,3 +9,5 @@ export const BASE_REQUEST_BASE_API_URL = 'https://api.productboard.com';
 export const BASE_REQUEST_BASE_APP_URL = 'https://app.productboard.com';
 
 export const ENTITY_ASSOCIATION_NAME = 'linked_productboard_items';
+
+export const GLOBAL_CLIENT_ID = 'yGBB8yFkIyS2ShpzIGiCRXPiN9PiDEnAIjFR1-WalrM';

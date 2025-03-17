@@ -10,8 +10,8 @@ export type TicketData = {
 };
 
 export type Settings = {
-    client_id: string;
-    client_secret: string;
+    use_deskpro_saas?: boolean;
+    client_id?: string;
 };
 
 export type Option<Value = unknown> = Omit<DropdownValueType<Value>, 'subItems'>;

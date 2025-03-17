@@ -1,55 +1,80 @@
 {
-  "name": "@deskpro-apps/productboard",
-  "title": "Productboard",
-  "description": "Manage your features in Productboard and seamlessly link them to tickets.",
-  "version": "0.0.21",
-  "scope": "agent",
-  "isSingleInstall": false,
-  "hasDevMode": true,
-  "targets": [{ "target": "ticket_sidebar", "entrypoint": "index.html" }],
-  "settings": {
-    "client_id": {
-      "title": "Client ID",
-      "type": "string",
-      "isRequired": true,
-      "isBackendOnly": false,
-      "order": 10
+    "name": "@deskpro-apps/productboard",
+    "title": "Productboard",
+    "description": "Manage your features in Productboard and seamlessly link them to tickets.",
+    "version": "0.0.21",
+    "scope": "agent",
+    "isSingleInstall": false,
+    "hasDevMode": true,
+    "targets": [
+        {
+            "target": "ticket_sidebar",
+            "entrypoint": "index.html"
+        }
+    ],
+    "settings": {
+        "use_deskpro_saas": {
+            "title": "Use Deskpro SaaS",
+            "type": "boolean",
+            "isRequired": false,
+            "isBackendOnly": false,
+            "default": true,
+            "order": 1
+        },
+        "client_id": {
+            "title": "Client ID",
+            "type": "string",
+            "isRequired": false,
+            "isBackendOnly": false,
+            "condition": "settings.use_deskpro_saas != true",
+            "order": 2
+        },
+        "client_secret": {
+            "title": "Client Secret",
+            "type": "string",
+            "isRequired": false,
+            "isBackendOnly": true,
+            "condition": "settings.use_deskpro_saas != true",
+            "order": 3
+        },
+        "callback_url": {
+            "title": "Callback URL",
+            "type": "app_embedded",
+            "options": {
+                "entrypoint": "#/admin/callback",
+                "height": "100px"
+            },
+            "isRequired": false,
+            "isBackendOnly": false,
+            "condition": "settings.use_deskpro_saas != true",
+            "order": 4
+        }
     },
-    "client_secret": {
-      "title": "Client Secret",
-      "type": "string",
-      "isRequired": true,
-      "isBackendOnly": false,
-      "order": 20
+    "entityAssociations": {
+        "linked_productboard_items": {
+            "entity": "ticket",
+            "type": "external_id",
+            "title": "Linked Productboard Items"
+        }
     },
-    "callback_url": {
-      "title": "Callback URL",
-      "type": "app_embedded",
-      "options": { "entrypoint": "#/admin/callback" },
-      "isRequired": false,
-      "isBackendOnly": true,
-      "order": 30
+    "proxy": {
+        "whitelist": [
+            {
+                "url": "https://app.productboard.com/.*",
+                "methods": [
+                    "GET",
+                    "POST"
+                ],
+                "timeout": 20
+            },
+            {
+                "url": "https://api.productboard.com/.*",
+                "methods": [
+                    "GET",
+                    "POST"
+                ],
+                "timeout": 20
+            }
+        ]
     }
-  },
-  "entityAssociations": {
-    "linked_productboard_items": {
-      "entity": "ticket",
-      "type": "external_id",
-      "title": "Linked Productboard Items"
-    }
-  },
-  "proxy": {
-    "whitelist": [
-      {
-        "url": "https://app.productboard.com/.*",
-        "methods": ["GET", "POST"],
-        "timeout": 20
-      },
-      {
-        "url": "https://api.productboard.com/.*",
-        "methods": ["GET", "POST"],
-        "timeout": 20
-      }
-    ]
-  }
 }
