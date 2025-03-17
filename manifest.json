@@ -6,6 +6,7 @@
     "scope": "agent",
     "isSingleInstall": false,
     "hasDevMode": true,
+    "secrets": "fCUhSEB0wGkvUQjvisWu3JHiQpGtGImYkR3rgoHzqiqtIdW/QIL4bxK1xkGBlqBl7oFGatVg3bvhVdQ77atozqoIXNLJ3lvNdRC9HeRgsJelQy+jmiaEXyZ5yZ45NQWi8u4XFoZuOMy+nGGHhWQHmZVzhbiyTtOli6EA1TU36lDsoPv7b1It883PzGuvuQNDPxMZVgiADz58hhcWtt2b1wQhaWl2ipdttK37NsMZcw1NZR3XnpcN31MHKjGw6N1vWQ6hJb20GgAMqXY5GrRE2ZC38BCwEC8/5w4NJo9asz/VL5IzYNYDp9zjJIYINE4aNPY9s4UFc2Y9lI+NrLRg6NruQwcnpr9hiLldaly3jJDLuXxy28D7BWGjem8WhZKaz0iKvk8jTIx4Zf6aPmexNrPC/i88uGJtwTKARiLlxfJasfJnMuhB1ZeZuYOzOnIFJmh1vDZimHAHcfOyCpNBQLibTu4S/XZrJL/O+a9j96VPNEFc8EAdSqVxYCfgaQpXE1MPIzwLKY6LGUpFs06PDWrGKMczLs8UkS6QgWw2cc0AiSwuEYt4KuCzILOpJ3FJ/3iwGfKigqFnbAs1d+m7v1puwAOXpK/KS2ud3Hi6sbc+QQX5ml+23dJnKXclIMIkh/6HwmRmzQcSeM7HNhTTiQ7GeQndspkJN0Q+Gumn7JIaYjuJKMm/WU4l/zvRFxyP25WMMvPTbTRObso4yK/T0z2u26pYKKknQCtSDVh68POIqNbKg/oys6oWkT+JTxEzHRwB2+88W2jK7OVzHf+GhTCJN9CDaX0bChtPqFUDgAD1cDgN5B/sYendbU9wSwYyryh8pWuCe37cxeQIYVL6UHAt53vHxsTuPLzs7+cgS27CWUT1OiFzH/pTcbzYzK8ZI8mEGLjTrubnVIs0XFL8+vgFKKv9Z8Q8V84tDKIc9I4Q2uNwBn7BrjDHi18h2XJRSGwiALpHpkgNqzcagRXbdYzEaSo/F3Bpn370aSit0aiLbzdybGD+ATVZv3MEfswqgfTJ/H/uDUfSoFKNHpO1uBjp9svkG58B1TpjTx/yTjw+AFpolm7H/08pFOy8lwBggOprdRG//BflGld3L/BF4/J7lrwVU+wvS0lJITmGHko=",
     "targets": [
         {
             "target": "ticket_sidebar",
