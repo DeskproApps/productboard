@@ -7,7 +7,7 @@ interface SetAccessToken {
 };
 
 function setAccessToken({ token, client }: SetAccessToken) {
-    return client.setUserState(USER_OAUTH_ACCESS_TOKEN_PATH, token);
+    return client.setUserState(USER_OAUTH_ACCESS_TOKEN_PATH, token, {backend: true});
 };
 
 export default setAccessToken;
