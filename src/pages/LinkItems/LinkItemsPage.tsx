@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDeskproAppClient, useDeskproAppEvents, useDeskproElements, useDeskproLatestAppContext, useInitialisedDeskproAppClient } from '@deskpro/app-sdk';
 import LinkItems from './LinkItems';
-import { useAsyncError, useSetTitle } from '@/hooks';
+import { useAsyncError, useLogIn, useSetTitle } from '@/hooks';
 import { getFeatures, getRegisteredItemIDs } from '@/services';
 import { ENTITY_ASSOCIATION_NAME } from '@/constants';
 import { Item, Payload, TicketData } from '@/types';
@@ -15,6 +15,7 @@ function LinkItemsPage() {
     const [selectedItemIDs, setSelectedItemIDs] = useState<Item['id'][]>([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const navigate = useNavigate();
+    const { logOut } = useLogIn();
     const { asyncErrorHandler } = useAsyncError();
 
     useSetTitle('Link Items');
@@ -47,6 +48,11 @@ function LinkItemsPage() {
             switch (payload.type) {
                 case 'changePage':
                     navigate(payload.path);
+
+                    break;
+
+                case 'logOut':
+                    logOut();
 
                     break;
             };

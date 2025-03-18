@@ -1,7 +1,7 @@
-My App
+Productboard
 ===
 
-TODO: Include a summary of app functionality and a screenshot
+Manage your features in Productboard and seamlessly link them to tickets.
 
 Pull Requests
 ===

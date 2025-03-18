@@ -4,7 +4,7 @@ import { Container } from '@/components';
 import { useLogIn } from '@/hooks';
 
 function LogInPage() {
-    const { authURL, isLoading, poll } = useLogIn();
+    const { authURL, isLoading, onLogIn } = useLogIn();
 
     return (
         <Container>
@@ -15,7 +15,7 @@ function LogInPage() {
                 href={authURL ?? '#'}
                 loading={!authURL || isLoading}
                 disabled={!authURL || isLoading}
-                onClick={poll}
+                onClick={onLogIn}
             />
         </Container>
     );

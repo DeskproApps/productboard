@@ -1,6 +1,5 @@
-import { Context, IDeskproClient, proxyFetch } from '@deskpro/app-sdk';
+import { IDeskproClient, proxyFetch } from '@deskpro/app-sdk';
 import { BASE_REQUEST_BASE_APP_URL } from '@/constants';
-import { Settings } from '@/types';
 
 type GetAccessAndRefreshTokensResponse = {
     access_token: string;
@@ -8,39 +7,33 @@ type GetAccessAndRefreshTokensResponse = {
 };
 
 interface GetAccessAndRefreshTokens {
-    token: string;
     client: IDeskproClient;
-    context: Context<unknown, Settings>;
+    code: string;
     redirectURI: string;
 };
 
-async function getAccessAndRefreshTokens({ token, client, context, redirectURI }: GetAccessAndRefreshTokens): Promise<GetAccessAndRefreshTokensResponse | undefined> {
-    const clientID = context.settings.client_id;
-    const clientSecret = context.settings.client_secret;
+async function getAccessAndRefreshTokens({ client, code, redirectURI }: GetAccessAndRefreshTokens) {
     const fetch = await proxyFetch(client);
-
-    if (!clientID || !clientSecret) return;
 
     try {
         const queryParameters = new URLSearchParams({
-            client_id: clientID,
-            client_secret: clientSecret,
+            client_id: '__client_id__',
+            client_secret: '__client_secret__',
             grant_type: 'authorization_code',
+            code,
             redirect_uri: redirectURI,
-            code: token
         });
         const response = await fetch(`${BASE_REQUEST_BASE_APP_URL}/oauth2/token?${queryParameters.toString()}`, {
             method: 'POST'
         });
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        const data: GetAccessAndRefreshTokensResponse = await response.json();
+        const data = await response.json() as GetAccessAndRefreshTokensResponse;
 
         return {
             access_token: data.access_token,
             refresh_token: data.refresh_token
         };
     } catch (error: unknown) {
-        return undefined;
+        throw new Error('error getting access and refresh tokens');
     };
 };
 
