@@ -10,4 +10,4 @@ export const BASE_REQUEST_BASE_APP_URL = 'https://app.productboard.com';
 
 export const ENTITY_ASSOCIATION_NAME = 'linked_productboard_items';
 
-export const GLOBAL_CLIENT_ID = 'yGBB8yFkIyS2ShpzIGiCRXPiN9PiDEnAIjFR1-WalrM';
+export const GLOBAL_CLIENT_ID = '6T1sP8N74U_c0w22zc2djB86RpASws9dpne6NKScoHo';
