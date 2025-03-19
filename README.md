@@ -3,6 +3,8 @@ Productboard
 
 Manage your features in Productboard and seamlessly link them to tickets.
 
+![Demo](/docs/assets/readme/productboard-app-readme-1.png)
+
 Pull Requests
 ===
 Every app deployment requires that the version property in the manifest.json file be updated to reflect the new app version. This is so Deskpro can detect changes and add/upgrade apps accordingly. As such, we've made altering versions easy by having CI make the actual version change for you. Here's what we do:
