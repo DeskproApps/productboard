@@ -1,46 +1,97 @@
-Productboard
-===
+<div align='center'>
+  <a target='_blank' href=''><img src='https://img.shields.io/github/contributors/deskproapps/productboard.svg?style=for-the-badge' alt='Contributors' /></a>
+  <a target='_blank' href='https://github.com/deskproapps/productboard/issues'><img src='https://img.shields.io/github/issues/deskproapps/productboard.svg?style=for-the-badge' alt='Issues' /></a>
+  <a target='_blank' href='https://github.com/deskproapps/productboard/blob/master/LICENSE.md'><img src='https://img.shields.io/github/license/deskproapps/productboard.svg?style=for-the-badge' alt='MIT License' /></a>
+  <a target='_blank' href='https://github.com/deskproapps/productboard/releases'><img src='https://img.shields.io/github/v/release/deskproapps/productboard?style=for-the-badge' alt='GitHub Release' /></a>
+  <a target='_blank' href='https://www.linkedin.com/company/deskpro'><img src='https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555' alt='LinkedIn' /></a>
+  <img src='readme.svg' />
+</div>
 
-Manage your features in Productboard and seamlessly link them to tickets.
+<div align='center'>
+  <h1>Productboard App</h1>
+  <p>Productboard is a platform that helps product teams manage feedback, prioritize features, and create roadmaps to align with customer needs.</p>
+  <a href='https://support.deskpro.com/ga/guides/developers/anatomy-of-an-app' target='_blank'>Deskpro Apps Documentation</a>
+  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+  <a href='https://developer.productboard.com' target='_blank'>Productboard API Documentation</a>
+  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+  <a href='./SETUP.md' target='_blank'>Productboard App Setup Guide</a>
+  <br />
+  <hr />
+  <br />
+</div>
 
-![Demo](/docs/assets/readme/productboard-app-readme-1.png)
+![screenshot of the Productboard App](./docs/readme/app-screenshot.png)
 
-Pull Requests
-===
-Every app deployment requires that the version property in the manifest.json file be updated to reflect the new app version. This is so Deskpro can detect changes and add/upgrade apps accordingly. As such, we've made altering versions easy by having CI make the actual version change for you. Here's what we do:
+## **About the App**
+The Productboard app enhances your Deskpro experience by integrating Productboard's robust product management tools directly into your helpdesk. With this app, agents can efficiently gather customer feedback, prioritize features, and collaborate with team members to align product development with customer needs and business goals.
 
-* We increment patch versions, i.e. 1.0.1, automatically. You don't need to do anything and this will happen
-* Minor versions, i.e. 1.1.0, are incremented if you add the minor-version GitHub label to your PR
-* Major versions, i.e. 2.0.0, are incremented if you add the major-version GitHub label to your PR
+## **Setting up the app in Deskpro**
+You can follow our [setup guide](./SETUP.md) for a step-by-step guide to setting up the Productboard app in Deskpro.
 
+## Development
 
-Basic Usage
----
+### With DevContainers (Recommended)
+To make development easier and avoid version conflicts, we recommend using **DevContainers** for local development. This approach ensures that everyone on the team uses the same environment, reducing setup issues and version mismatches between dependencies.
 
-We recommend using [PNPM](https://pnpm.io/) to manage this project. First, start by installing the project 
-dependencies from inside the project directory `app-template-vite`.
+#### Why use DevContainers?
+- **Consistency:** All developers work in the same environment, with the same versions of dependencies, tools, and configurations.
+- **Speed:** The DevContainer setup is quick to start, letting you focus on coding rather than environment setup.
+- **Isolation:** Avoid conflicts between different versions of Node.js, PNPM, or other dependencies by using the predefined container setup.
 
-```bash
+#### Getting Started with DevContainers
+1. Ensure that you have [Docker](https://www.docker.com/get-started) and [VS Code](https://code.visualstudio.com/) installed.
+2. Open the project in [VS Code](https://code.visualstudio.com/).
+3. If you have the **Remote - Containers** extension installed, [VS Code](https://code.visualstudio.com/) should automatically detect the `.devcontainer` configuration in this project and prompt you to reopen the folder in the container.
+4. After opening the project in the DevContainer, run:
+   ```bash
+   pnpm start
+   ```
+
+You should now be able to view the app in your browser. For more information about developing [Deskpro apps](https://www.deskpro.com/apps), [Visit the docs](https://support.deskpro.com/ga/guides/developers/anatomy-of-an-app).
+
+### Natively
+_We recommend using the DevContainer mentioned above for Consistency, Speed and Isolation._
+
+This app was developed primarily using **TypeScript**, **React**, and **Vite**.
+
+#### Setup
+To run this project locally:
+
+ ```bash
+# Clone the repository
+git clone https://github.com/DeskproApps/productboard.git
+
+# Change to the project directory
+cd productboard
+
+# Install dependencies
 pnpm install
+
+# Run the development server
+pnpm start
 ```
 
-Then, run the development server.
+You should now be able to view the app in your browser. For more information about developing [Deskpro Apps](https://www.deskpro.com/apps), [Visit the Docs](https://support.deskpro.com/ga/guides/developers/anatomy-of-an-app).
 
-```bash
-pnpm run start
-```
-
-You should now be able to view the bare-bones app in your browser.
-
-For more information or to start developing an app, please take a look at our [developer guides](https://support.deskpro.com/en-US/guides/developers/apps/apps-1/anatomy-of-an-app).
-
-Testing
----
-
-We've included `jest` to run your tests. It will look anywhere in `/src` for test suite files ending in `.test.tsx`.
+### Testing
+We've included `jest` to run tests. It will look anywhere in `/src` for test suite files ending in `.test.tsx` or `.test.ts`.
 
 You can run all tests using:
 
 ```bash
-pnpm run test
+pnpm test
 ```
+
+## Versioning
+Every app deployment requires that the version property in the `manifest.json` file be updated to reflect the new app version. This is so Deskpro can detect changes and add/upgrade apps accordingly. As such, we've made altering versions easy by having CI make the actual version change for you. Here's what we do:
+
+* We increment **patch** versions, i.e. 1.0.1, automatically. This is the default
+* **Minor** versions, i.e. 1.1.0, are incremented if you add the `minor-version` GitHub label to your PR
+* **Major** versions, i.e. 2.0.0, are incremented if you add the `major-version` GitHub label to your PR
+
+## Top Contributors
+[![Contributors](https://contrib.rocks/image?repo=deskproapps/productboard)](https://github.com/deskproapps/productboard/graphs/contributors)
+
+
+## License
+Distributed under the MIT License. See [LICENSE.md](LICENSE.md) for more information.
