@@ -1,3 +1,5 @@
+import * as Sentry from '@sentry/react';
+import './instrument';
 import { StrictMode, Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import { HashRouter } from 'react-router-dom';
@@ -12,7 +14,9 @@ import '@deskpro/deskpro-ui/dist/deskpro-ui.css';
 import '@deskpro/deskpro-ui/dist/deskpro-custom-icons.css';
 import './main.css';
 
-const root = ReactDOM.createRoot(document.getElementById('root') as Element);
+const root = ReactDOM.createRoot(document.getElementById('root') as Element, {
+  onRecoverableError: Sentry.reactErrorHandler(),
+});
 
 root.render((
     <StrictMode>
@@ -20,11 +24,11 @@ root.render((
             <HashRouter>
                 <QueryClientProvider client={queryClient}>
                     <Suspense fallback={<LoadingSpinner />}>
-                        <ErrorBoundary fallback={<ErrorPage />}>
+                        <Sentry.ErrorBoundary fallback={<ErrorPage />}>
                             <StoreProvider>
                                 <App />
                             </StoreProvider>
-                        </ErrorBoundary>
+                        </Sentry.ErrorBoundary>
                     </Suspense>
                 </QueryClientProvider>
             </HashRouter>
