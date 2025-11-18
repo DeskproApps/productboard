@@ -63,7 +63,7 @@
             "querystring": ["client_id"]
           },
           "client_secret": {
-            "querystring": ["client_id"]
+            "querystring": ["client_secret"]
           }
         }
       },
